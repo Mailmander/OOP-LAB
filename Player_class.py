@@ -7,6 +7,9 @@ class Player():
         self.owned_fields=[]
         self.fields_tosell=[]
         self.current_field=0
+        self.double = 0
+        self.prisoner = 0
+        self.waiting = 0
 
     def nextfield(self,dice):
         self.current_field=(self.current_field+dice)%40
@@ -19,6 +22,20 @@ class Player():
             self.owned_fields.append(fieldnumber)
         else:
             print("Грошиків тобі не вистачає друже :(")
+
+    def field_deposit(self):
+        deposit=100
+        if(self.owned_fields.count(2)!=0):
+            self.owned_fields.remove(2)
+            self.current_field.append(2)
+            return
+
+    def field_undeposit(self):
+        deposit = 100
+        if (self.owned_fields.count(2) != 0):
+            self.owned_fields.remove(2)
+            self.current_field.append(2)
+            return
 
 
 
