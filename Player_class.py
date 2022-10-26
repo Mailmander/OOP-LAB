@@ -23,18 +23,18 @@ class Player():
         else:
             print("Грошиків тобі не вистачає друже :(")
 
-    def field_deposit(self):
-        deposit=100
-        if(self.owned_fields.count(2)!=0):
-            self.owned_fields.remove(2)
-            self.current_field.append(2)
+    def field_deposit(self,field,deposit):
+        if(self.owned_fields.count(field)!=0):
+            self.owned_fields.remove(field)
+            self.fields_tosell.append(field)
+            self.money=self.money+deposit
             return
 
-    def field_undeposit(self):
-        deposit = 100
-        if (self.owned_fields.count(2) != 0):
-            self.owned_fields.remove(2)
-            self.current_field.append(2)
+    def field_undeposit(self,field,fromdeposit):
+        if (self.fields_tosell.count(field) != field & self.money>fromdeposit):
+            self.fields_tosell.remove(field)
+            self.owned_fields.append(field)
+            self.money = self.money - fromdeposit
             return
 
 
