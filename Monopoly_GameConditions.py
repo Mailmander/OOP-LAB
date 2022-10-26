@@ -23,6 +23,10 @@ class GameConditions():
 		while True:
 			counter = (counter+1)%self.NumOfPlayers
 			self.Turn(self.PlayersArray[counter])
+			while Player.extra_turn:
+				self.Turn(self.PlayersArray[counter])
+
+
 
 	def Turn(self, Player):
 		field = self.FieldsArray[Player.current_field].field_type
@@ -55,18 +59,26 @@ class GameConditions():
 					else:
 						AUKCION
 			case "4":
-
+				Player.money += self.FieldsArray[Player.current_field].chance()
 			case "5":
+				Player.current_field = 10
 			case "6":
+
 			case "7":
 			case "8":
 			case "9":
 
 
 	def ThrowDice(self, Player):
-		dice = random.randint(1, 6) + random.randint(1, 6)
+		A = random.randint(1, 6)
+		B = random.randint(1, 6)
+		dice =  A + B
 		if Player.current_field + dice >= self.NumOfFields:
 			Player.money += 2000
+		if A == B:
+			Player.extra_turn = 1
+		else:
+			Player.extra_turn = 0
 		Player.current_field = (Player.current_field + dice) % self.NumOfFields
 
 
