@@ -3,6 +3,7 @@ import random
 
 class GameConditions():
 
+	NumOfFields = 40
 	PlayersArray = []
 	FieldsArray = []
 
@@ -21,8 +22,51 @@ class GameConditions():
 		counter = -1
 		while True:
 			counter = (counter+1)%self.NumOfPlayers
-			self.Step(self.PlayersArray[counter])
+			self.Turn(self.PlayersArray[counter])
 
-	def Step(player):
+	def Turn(self, Player):
+		field = self.FieldsArray[Player.current_field].field_type
+
+		match field:
+			case "0":
+				self.ThrowDice(Player)
+			case "1":
+				if self.FieldsArray[Player.current_field].owner != None:
+					NALOG
+				else:
+					if int(input("Купляємо? (1/0)")):
+						BUY
+					else:
+						AUKCION
+			case "2":
+				if self.FieldsArray[Player.current_field].owner != None:
+					NALOG(num of stations in ownership)
+				else:
+					if int(input("Купляємо? (1/0)")):
+						BUY
+					else:
+						AUKCION
+			case "3":
+				if self.FieldsArray[Player.current_field].owner != None:
+					NALOG(num of fields in ownership)
+				else:
+					if int(input("Купляємо? (1/0)")):
+						BUY
+					else:
+						AUKCION
+			case "4":
+
+			case "5":
+			case "6":
+			case "7":
+			case "8":
+			case "9":
+
+
+	def ThrowDice(self, Player):
 		dice = random.randint(1, 6) + random.randint(1, 6)
+		if Player.current_field + dice >= self.NumOfFields:
+			Player.money += 2000
+		Player.current_field = (Player.current_field + dice) % self.NumOfFields
+
 
