@@ -1,20 +1,28 @@
 from Player_class import Player
+import random
 
 class GameConditions():
 
 	PlayersArray = []
+	FieldsArray = []
 
 	def CreatePlayers(self):
 		self.NumOfPlayers = int(input("Enter number of player.\n"))
 		for i in range(self.NumOfPlayers):
-			self.PlayersArray[i] = Player(i)
-#			print(self.PlayersArray[i].name)
-#		print(self.PlayersArray[0].name)
+			self.PlayersArray.append(Player(i))
 		return
 
+	def CreateFields(self):
+		pass
 
-	#def GameStart(self):
-	#	self.CreatePlayers()
+	def GameStart(self):
+		self.CreatePlayers()
+		self.CreateFields()
+		counter = -1
+		while True:
+			counter = (counter+1)%self.NumOfPlayers
+			self.Step(self.PlayersArray[counter])
 
 	def Step(player):
-		return
+		dice = random.randint(1, 6) + random.randint(1, 6)
+
