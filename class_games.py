@@ -3,6 +3,7 @@ class Field():
         pass
 
 class Cell_buyable(Field):
+    name = "Default"
     cost = int(0)
     owner = None
 
@@ -21,3 +22,7 @@ class Cell_buyable_color(Cell_buyable):
     arend = [0, 0, 0, 0, 0, 0]
     # def cost():
     #     return self.arend[self.houses]
+
+# class Cell_buyable_railway(Cell_buyable):
+#     def __init__(self):
+#         pass
