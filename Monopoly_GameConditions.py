@@ -7,7 +7,7 @@ class GameConditions():
 	FieldsArray = []
 
 	def CreatePlayers(self):
-		self.NumOfPlayers = int(input("Enter number of player.\n"))
+		self.NumOfPlayers = int(input("Введіть к-ть гравців.\n"))
 		for i in range(self.NumOfPlayers):
 			self.PlayersArray.append(Player(i))
 		return
