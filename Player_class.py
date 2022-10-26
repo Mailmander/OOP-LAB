@@ -7,7 +7,9 @@ class Player():
         self.owned_fields=[]
         self.fields_tosell=[]
         self.current_field=0
-        self.extra_turn = 0
+        self.double = 0
+        self.prisoner = 0
+        self.waiting = 0
 
     def nextfield(self,dice):
         self.current_field=(self.current_field+dice)%40
