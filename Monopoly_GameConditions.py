@@ -5,16 +5,14 @@ class GameConditions():
 	PlayersArray = []
 
 	def CreatePlayers(self):
-		self.NumOfPlayers = int(input("Enter number of player.\n"))
+		self.NumOfPlayers = int(input("Введіть к-ть гравців.\n"))
 		for i in range(self.NumOfPlayers):
-			self.PlayersArray[i] = Player(i)
-#			print(self.PlayersArray[i].name)
-#		print(self.PlayersArray[0].name)
+			self.PlayersArray.append(Player(i))
 		return
 
 
-	#def GameStart(self):
-	#	self.CreatePlayers()
+	def GameStart(self):
+		self.CreatePlayers()
 
 	def Step(player):
 		return
