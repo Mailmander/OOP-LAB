@@ -10,7 +10,7 @@ class GameConditions():
 			self.PlayersArray[i] = Player(i)
 #			print(self.PlayersArray[i].name)
 #		print(self.PlayersArray[0].name)
-		return#
+		return
 
 
 	#def GameStart(self):
