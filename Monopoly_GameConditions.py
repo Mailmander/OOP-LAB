@@ -325,9 +325,10 @@ class GameConditions():
 		counter = -1
 		while True:
 			counter = (counter+1)%self.NumOfPlayers
-			self.Turn(self.PlayersArray[counter])
-			while Player.extra_turn:
+			if(self.PlayersArray[counter].alive == 1):
 				self.Turn(self.PlayersArray[counter])
+				while Player.extra_turn:
+					self.Turn(self.PlayersArray[counter])
 
 
 
@@ -343,10 +344,18 @@ class GameConditions():
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0)")):
+<<<<<<< HEAD
 						#BUY
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
+=======
+						BUY
+						Player.buy_newfield(ЦІНА,ПОЛЕ)
+						self.ThrowDice(Player)
+					else:
+						Player.auction(ЦІНА,ПОЛЕ)
+>>>>>>> 8fa943a6e1222ad4d1b3f0044e4a70a9f0c98915
 						self.ThrowDice(Player)
 			case "2":
 				if self.FieldsArray[Player.current_field].owner != None:
@@ -354,10 +363,19 @@ class GameConditions():
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0)")):
+<<<<<<< HEAD
 						#BUY
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
+=======
+						BUY
+						Player.buy_newfield(ЦІНА, ПОЛЕ)
+						self.ThrowDice(Player)
+					else:
+						AUKCION
+						Player.auction(ЦІНА, ПОЛЕ)
+>>>>>>> 8fa943a6e1222ad4d1b3f0044e4a70a9f0c98915
 						self.ThrowDice(Player)
 			case "3":
 				if self.FieldsArray[Player.current_field].owner != None:
@@ -371,7 +389,8 @@ class GameConditions():
 						#AUKCION
 						self.ThrowDice(Player)
 			case "4":
-				Player.money += self.FieldsArray[Player.current_field].chance()
+				Player.money_deposit(self.FieldsArray[Player.current_field].chance())
+
 				self.ThrowDice(Player)
 			case "5":
 				Player.current_field = 10
@@ -390,10 +409,10 @@ class GameConditions():
 				else:
 					self.ThrowDice(Player)
 			case "7":
-				Player.money -= 4000
+				Player.money_withdraw(4000)
 				self.ThrowDice(Player)
 			case "8":
-				Player.money -= 2000
+				Player.money_withdraw(2000)
 				self.ThrowDice(Player)
 			case "9":
 				if Player.waiting == 0:
@@ -412,12 +431,12 @@ class GameConditions():
 		dice =  A + B
 		print("Ваши кубики: ", A, " + ", B, " = ", dice)
 		if Player.current_field + dice >= self.NumOfFields:
-			Player.money += 2000
+			Player.money_deposit(2000)
 		if A == B:
 			Player.double = 1
 		else:
 			Player.double = 0
-		Player.current_field = (Player.current_field + dice) % self.NumOfFields
+		Player.nextfield(dice)
 
 
 k = GameConditions()
