@@ -327,18 +327,19 @@ class GameConditions():
 			counter = (counter+1)%self.NumOfPlayers
 			if(self.PlayersArray[counter].alive == 1):
 				self.Turn(self.PlayersArray[counter])
-				while Player.extra_turn:
+				while self.PlayersArray[counter].double:
 					self.Turn(self.PlayersArray[counter])
 
-
-
 	def Turn(self, Player):
-		field = self.FieldsArray[Player.current_field].field_type
+		print("Хід гравця ", Player.name)
+		print("Гравець стоїть на полі типу ", self.FieldsArray[Player.current_field].field_type)
 
+		field = self.FieldsArray[Player.current_field].field_type
 		match field:
-			case "0":
+			case 0:
+				print("Стартове поле")
 				self.ThrowDice(Player)
-			case "1":
+			case 1:
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG (num of houses in ownership)
 					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
@@ -354,7 +355,7 @@ class GameConditions():
 						if(Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field)==1):
 							self.FieldsArray[Player.current_field].owner = Player.playernumber
 						self.ThrowDice(Player)
-			case "2":
+			case 2:
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG(num of stations in ownership)
 					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
@@ -371,7 +372,7 @@ class GameConditions():
 						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
 							self.FieldsArray[Player.current_field].owner = Player.playernumber
 						self.ThrowDice(Player)
-			case "3":
+			case 3:
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG(num of fields in ownership)
 					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
@@ -387,14 +388,14 @@ class GameConditions():
 						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
 							self.FieldsArray[Player.current_field].owner = Player.playernumber
 						self.ThrowDice(Player)
-			case "4":
+			case 4:
 				Player.money_deposit(self.FieldsArray[Player.current_field].chance())
 
 				self.ThrowDice(Player)
-			case "5":
+			case 5:
 				Player.current_field = 10
 				Player.prisoner = 1
-			case "6":
+			case 6:
 				if Player.prisoner:
 					for i in range(3):
 						A = random.randint(1, 6)
@@ -407,20 +408,18 @@ class GameConditions():
 					Player.prisoner = 0
 				else:
 					self.ThrowDice(Player)
-			case "7":
+			case 7:
 				Player.money_withdraw(4000)
 				self.ThrowDice(Player)
-			case "8":
+			case 8:
 				Player.money_withdraw(2000)
 				self.ThrowDice(Player)
-			case "9":
+			case 9:
 				if Player.waiting == 0:
 					Player.waiting = 1
 				else:
 					Player.waiting = 0
 					self.ThrowDice(Player)
-
-#последняя версия
 
 	def ThrowDice(self, Player):
 		A = random.randint(1, 6)

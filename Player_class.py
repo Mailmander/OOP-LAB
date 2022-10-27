@@ -1,4 +1,4 @@
-from Monopoly_GameConditions import GameConditions
+#from Monopoly_GameConditions import GameConditions
 class Player():
     def __init__(self, playernumber):
         self.name = input("Enter Player name.\n")
