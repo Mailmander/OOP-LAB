@@ -1,4 +1,4 @@
-
+from Monopoly_GameConditions import GameConditions
 class Player():
     def __init__(self, playernumber):
         self.name = input("Enter Player name.\n")
@@ -10,6 +10,22 @@ class Player():
         self.double = 0
         self.prisoner = 0
         self.waiting = 0
+        self.alive = 1
+
+    def money_deposit(self,amountofmoney):
+        if(self.money>=-amountofmoney):
+            self.money=self.money+amountofmoney
+        else:
+            self.alive=0
+        return
+
+    def money_withdraw(self,amountofmoney):
+        if(self.money>amountofmoney):
+            self.money=self.money+amountofmoney
+        else:
+            self.alive = 0
+        return
+
 
     def nextfield(self,dice):
         self.current_field=(self.current_field+dice)%40
@@ -45,6 +61,23 @@ class Player():
             userto.money = userto.money + sum
         else:
             print("В Цього Гравця нема таких грошей :(")
+
+
+    def auction(self,fieldprice,field):
+        i=0
+        newprice=fieldprice+100
+        while():
+            if(GameConditions.PlayersArray[i] != self & GameConditions.PlayersArray[i].money>=newprice):
+                print(GameConditions.PlayersArray[i].name + " може купити це поле за" + newprice)
+                if(input("Так")):
+                    GameConditions.PlayersArray[i].buy_newfield(newprice,field)
+                else:
+                    newprice=newprice+100
+            i=(i+1)%GameConditions.NumOfPlayers
+
+
+
+
 
 
 
