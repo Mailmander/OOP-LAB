@@ -62,7 +62,7 @@ class GameConditions():
 		cell_cur.name = "Автобус 410"
 		cell_cur.cost_of_cell = 1500
 		self.FieldsArray.append(cell_cur)
-		#Клетка 6 - Паравоз 
+		#Клетка 6 - Паравоз
 		cell_cur = Cell_buyable_color()
 		cell_cur.field_number = 6
 		cell_cur.color = "light blue"
@@ -292,7 +292,7 @@ class GameConditions():
 		cell_cur.name = "Метро Політехнічний інститут "
 		cell_cur.cost_of_cell = 1500
 		self.FieldsArray.append(cell_cur)
-		#Клетка 36 - Шанс 
+		#Клетка 36 - Шанс
 		cell_cur = Cell_Chance()
 		cell_cur.name = "Шанс"
 		cell_cur.field_number = 36
@@ -340,6 +340,8 @@ class GameConditions():
 	def Turn(self, Player):
 		print("\nХід ", Player.playernumber, " гравця ", Player.name)
 		print("Гравець стоїть на ", Player.current_field," полі типу ", self.FieldsTypes[self.FieldsArray[Player.current_field].field_type], " під назвою ", self.FieldsArray[Player.current_field].name)
+		print("Грошики: ", Player.money)
+		print("У гравця є такі поля: ", Player.owned_fields)
 
 		field = self.FieldsArray[Player.current_field].field_type
 		match field:
@@ -348,7 +350,7 @@ class GameConditions():
 			case 1:
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG (num of houses in ownership)
-					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
+					Player.tax(self.FieldsArray[Player.current_field].base_arend,self.FieldsArray[Player.current_field].owner)
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0):   ")):
@@ -364,7 +366,7 @@ class GameConditions():
 			case 2:
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG(num of stations in ownership)
-					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
+					Player.tax(self.FieldsArray[Player.current_field].base_arend,self.FieldsArray[Player.current_field].owner)
 
 					self.ThrowDice(Player)
 				else:
@@ -381,7 +383,7 @@ class GameConditions():
 			case 3:
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG(num of fields in ownership)
-					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
+					Player.tax(self.FieldsArray[Player.current_field].base_arend,self.FieldsArray[Player.current_field].owner)
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0):   ")):
