@@ -13,7 +13,7 @@ class GameConditions():
 	NumOfFields = 40
 	PlayersArray = []
 	FieldsArray = []
-	FieldsTypes = ["старт", "кольорова", "спеціальна", "шанс", "вхід у в'язницю", "в'язниця", "податок", "надподаток", "стоянка"]
+	FieldsTypes = ["старт", "кольорова", "станция", "спеціальна", "шанс", "вхід у в'язницю", "в'язниця", "податок", "надподаток", "стоянка"]
 
 	def CreatePlayers(self):
 		self.NumOfPlayers = int(input("Введіть к-ть гравців.\n"))
@@ -97,7 +97,7 @@ class GameConditions():
 		#Клетка 10 - Тюрьма
 		cell_cur = Field()
 		cell_cur.name = "Тюрьма"
-		cell_cur.field_type = 5
+		cell_cur.field_type = 6
 		cell_cur.field_number = 10
 		self.FieldsArray.append(cell_cur)
 		#Клетка 11 - Общага номер 6
@@ -174,7 +174,7 @@ class GameConditions():
 		#Клетка 20 - Стояночка
 		cell_cur = Field()
 		cell_cur.name = "Стояночка"
-		cell_cur.field_type = 8
+		cell_cur.field_type = 9
 		cell_cur.field_number = 20
 		self.FieldsArray.append(cell_cur)
 		#Клетка 21 - АТБ
@@ -382,7 +382,7 @@ class GameConditions():
 						self.ThrowDice(Player)
 			case 3:
 				if self.FieldsArray[Player.current_field].owner != None:
-					#NALOG(num of fields in ownership)
+					#NALOG(num of fields in ownership) ERROR (line 386)
 					Player.tax(self.FieldsArray[Player.current_field].base_arend,self.FieldsArray[Player.current_field].owner)
 					self.ThrowDice(Player)
 				else:
@@ -398,7 +398,6 @@ class GameConditions():
 						self.ThrowDice(Player)
 			case 4:
 				Player.money_deposit(self.FieldsArray[Player.current_field].chance())
-
 				self.ThrowDice(Player)
 			case 5:
 				Player.current_field = 10
