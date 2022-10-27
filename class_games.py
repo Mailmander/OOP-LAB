@@ -8,7 +8,7 @@ class Field():
         pass
 
 class Cell_buyable(Field):
-    cost = int(0)
+    cost_of_cell = 0
     owner = None
     number = -1
     def buy(self, player):
@@ -16,7 +16,7 @@ class Cell_buyable(Field):
 
 
 class Cell_buyable_color(Cell_buyable):
-
+    field_type = 1
     color = "Default"
     houses = 0
     houses_cost = 0
@@ -25,16 +25,19 @@ class Cell_buyable_color(Cell_buyable):
         return self.base_arend*self.houses+1000
 
 class Cell_buyable_stations(Cell_buyable):
+    field_type = 2
     arend_rail = [25, 50, 100, 200]
     def cost(self, number_of_builds):
         return self.arend_rail[number_of_builds-1]
 
 class Cell_buyable_spec(Cell_buyable):
+    field_type = 3
     arend_spec = [4, 10]
     def cost(self, cubics, number_of_builds):
         return self.arend_spec[number_of_builds-1] * cubics
 
 class Cell_Chance (Field):
+    field_type = 4
     def chance(self):
         k = random.randint(1, 10)
         match k:
