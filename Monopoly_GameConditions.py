@@ -405,6 +405,7 @@ class GameConditions():
 					Player.waiting = 0
 					self.ThrowDice(Player)
 
+#последняя версия
 
 	def ThrowDice(self, Player):
 		A = random.randint(1, 6)
