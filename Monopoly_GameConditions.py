@@ -341,36 +341,51 @@ class GameConditions():
 			case "1":
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG (num of houses in ownership)
+					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0)")):
 						#BUY
+						if(Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field)==1):
+							self.FieldsArray[Player.current_field].owner=Player.playernumber
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
-
+						if(Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field)==1):
+							self.FieldsArray[Player.current_field].owner = Player.playernumber
 						self.ThrowDice(Player)
 			case "2":
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG(num of stations in ownership)
+					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
+
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0)")):
 						#BUY
+						if (Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
+							self.FieldsArray[Player.current_field].owner = Player.playernumber
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
+						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
+							self.FieldsArray[Player.current_field].owner = Player.playernumber
 						self.ThrowDice(Player)
 			case "3":
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG(num of fields in ownership)
+					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0)")):
 						#BUY
+						if (Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
+							self.FieldsArray[Player.current_field].owner = Player.playernumber
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
+						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
+							self.FieldsArray[Player.current_field].owner = Player.playernumber
 						self.ThrowDice(Player)
 			case "4":
 				Player.money_deposit(self.FieldsArray[Player.current_field].chance())

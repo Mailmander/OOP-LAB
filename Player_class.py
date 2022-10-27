@@ -12,7 +12,12 @@ class Player():
         self.waiting = 0
         self.alive = 1
 
+
+    def isowner(self,fieldnumber):
+        if(self.owned_fields.count(fieldnumber)!=0):
+            return 1
     def money_deposit(self,amountofmoney):
+
         if(self.money>=-amountofmoney):
             self.money=self.money+amountofmoney
         else:
@@ -20,6 +25,7 @@ class Player():
         return
 
     def money_withdraw(self,amountofmoney):
+
         if(self.money>amountofmoney):
             self.money=self.money+amountofmoney
         else:
@@ -28,6 +34,7 @@ class Player():
 
 
     def nextfield(self,dice):
+
         self.current_field=(self.current_field+dice)%40
         return self.current_field
 
@@ -36,8 +43,10 @@ class Player():
         if(self.money>price):
             self.money=self.money-price
             self.owned_fields.append(fieldnumber)
+            return 1
         else:
             print("Грошиків тобі не вистачає друже :(")
+            return 0
 
     def field_deposit(self,field,deposit):
         if(self.owned_fields.count(field)!=0):
@@ -62,6 +71,13 @@ class Player():
         else:
             print("В Цього Гравця нема таких грошей :(")
 
+    def tax(self,fieldtax,owner):
+        if(self.money>=fieldtax):
+            self.money_transferto(owner,fieldtax)
+        else:
+            self.alive=0
+            print("В Цього Гравця нема таких грошей :(")
+
 
     def auction(self,fieldprice,field):
         i=0
@@ -70,10 +86,12 @@ class Player():
             if(GameConditions.PlayersArray[i] != self & GameConditions.PlayersArray[i].money>=newprice):
                 print(GameConditions.PlayersArray[i].name + " може купити це поле за" + newprice)
                 if(input("Так")):
-                    GameConditions.PlayersArray[i].buy_newfield(newprice,field)
+                    if(GameConditions.PlayersArray[i].buy_newfield(newprice,field)==1):
+                        return 1
                 else:
                     newprice=newprice+100
             i=(i+1)%GameConditions.NumOfPlayers
+        return 0
 
 
 
