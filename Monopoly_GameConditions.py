@@ -344,18 +344,11 @@ class GameConditions():
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0)")):
-<<<<<<< HEAD
 						#BUY
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
-=======
-						BUY
-						Player.buy_newfield(ЦІНА,ПОЛЕ)
-						self.ThrowDice(Player)
-					else:
-						Player.auction(ЦІНА,ПОЛЕ)
->>>>>>> 8fa943a6e1222ad4d1b3f0044e4a70a9f0c98915
+
 						self.ThrowDice(Player)
 			case "2":
 				if self.FieldsArray[Player.current_field].owner != None:
@@ -363,19 +356,10 @@ class GameConditions():
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0)")):
-<<<<<<< HEAD
 						#BUY
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
-=======
-						BUY
-						Player.buy_newfield(ЦІНА, ПОЛЕ)
-						self.ThrowDice(Player)
-					else:
-						AUKCION
-						Player.auction(ЦІНА, ПОЛЕ)
->>>>>>> 8fa943a6e1222ad4d1b3f0044e4a70a9f0c98915
 						self.ThrowDice(Player)
 			case "3":
 				if self.FieldsArray[Player.current_field].owner != None:
@@ -422,9 +406,6 @@ class GameConditions():
 					self.ThrowDice(Player)
 
 
-
-
-
 	def ThrowDice(self, Player):
 		A = random.randint(1, 6)
 		B = random.randint(1, 6)
@@ -438,7 +419,3 @@ class GameConditions():
 			Player.double = 0
 		Player.nextfield(dice)
 
-
-k = GameConditions()
-k.CreateFields()
-k.PrintFields()
