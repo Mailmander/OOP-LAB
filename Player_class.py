@@ -1,7 +1,7 @@
 #from Monopoly_GameConditions import GameConditions
 class Player():
     def __init__(self, playernumber):
-        self.name = input("Enter Player name.\n")
+        self.name = input("Введіть Ім'я Гравця: \n")
         self.money = 20000
         self.playernumber = playernumber
         self.owned_fields=[]
@@ -73,6 +73,7 @@ class Player():
 
     def tax(self,fieldtax,owner):
         if(self.money>=fieldtax):
+            #print("Гравець " + self.name + "виплачує орендну плату у розмірі " + fieldtax + "Гравцю " + owner.name)
             self.money_transferto(owner,fieldtax)
         else:
             self.alive=0
@@ -84,7 +85,7 @@ class Player():
         newprice=fieldprice+100
         while():
             if(GameConditions.PlayersArray[i] != self & GameConditions.PlayersArray[i].money>=newprice):
-                print(GameConditions.PlayersArray[i].name + " може купити це поле за" + newprice)
+                print(GameConditions.PlayersArray[i].name + " може купити це поле за " + newprice)
                 if(input("Так")):
                     if(GameConditions.PlayersArray[i].buy_newfield(newprice,field)==1):
                         return 1
