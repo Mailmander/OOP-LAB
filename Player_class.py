@@ -1,7 +1,7 @@
 #from Monopoly_GameConditions import GameConditions
 class Player():
     def __init__(self, playernumber):
-        self.name = input("Enter Player name.\n")
+        self.name = input("Введіть ім'я гравця.\n")
         self.money = 20000
         self.playernumber = playernumber
         self.owned_fields=[]
@@ -35,7 +35,7 @@ class Player():
 
     def nextfield(self,dice):
 
-        self.current_field=(self.current_field+dice)%40
+        self.current_field = (self.current_field + dice) % 40
         return self.current_field
 
 

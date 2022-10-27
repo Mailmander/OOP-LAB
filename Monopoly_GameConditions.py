@@ -13,6 +13,7 @@ class GameConditions():
 	NumOfFields = 40
 	PlayersArray = []
 	FieldsArray = []
+	FieldsTypes = ["старт", "кольорова", "спеціальна", "шанс", "вхід у в'язницю", "в'язниця", "податок", "надподаток", "стоянка"]
 
 	def CreatePlayers(self):
 		self.NumOfPlayers = int(input("Введіть к-ть гравців.\n"))
@@ -21,7 +22,7 @@ class GameConditions():
 		return
 
 	def CreateFields(self):
-		# Клетка старт
+		# Клетка 0 - старт
 		cell_cur = Field()
 		cell_cur.field_type = 0
 		cell_cur.field_number = 0
@@ -60,6 +61,7 @@ class GameConditions():
 		cell_cur.field_number = 5
 		cell_cur.name = "Автобус 410"
 		cell_cur.cost_of_cell = 1500
+		self.FieldsArray.append(cell_cur)
 		#Клетка 6 - Паравоз 
 		cell_cur = Cell_buyable_color()
 		cell_cur.field_number = 6
@@ -95,7 +97,7 @@ class GameConditions():
 		#Клетка 10 - Тюрьма
 		cell_cur = Field()
 		cell_cur.name = "Тюрьма"
-		cell_cur.field_type = 6
+		cell_cur.field_type = 5
 		cell_cur.field_number = 10
 		self.FieldsArray.append(cell_cur)
 		#Клетка 11 - Общага номер 6
@@ -112,6 +114,7 @@ class GameConditions():
 		cell_cur.field_number = 12
 		cell_cur.name = "КПIтелеком"
 		cell_cur.cost_of_cell = 1500
+		self.FieldsArray.append(cell_cur)
 		#Клетка 13 - Общага номер 7
 		cell_cur = Cell_buyable_color()
 		cell_cur.field_number = 13
@@ -135,6 +138,7 @@ class GameConditions():
 		cell_cur.field_number = 15
 		cell_cur.name = "Трамвай"
 		cell_cur.cost_of_cell = 1500
+		self.FieldsArray.append(cell_cur)
 		#Клетка 16 - 7 корпус
 		cell_cur = Cell_buyable_color()
 		cell_cur.field_number = 16
@@ -170,7 +174,7 @@ class GameConditions():
 		#Клетка 20 - Стояночка
 		cell_cur = Field()
 		cell_cur.name = "Стояночка"
-		cell_cur.field_type = 9
+		cell_cur.field_type = 8
 		cell_cur.field_number = 20
 		self.FieldsArray.append(cell_cur)
 		#Клетка 21 - АТБ
@@ -210,6 +214,7 @@ class GameConditions():
 		cell_cur.field_number = 25
 		cell_cur.name = "Метро Шулявська"
 		cell_cur.cost_of_cell = 1500
+		self.FieldsArray.append(cell_cur)
 		#Клетка 26 - Арома Кава
 		cell_cur = Cell_buyable_color()
 		cell_cur.field_number = 26
@@ -233,6 +238,7 @@ class GameConditions():
 		cell_cur.field_number = 28
 		cell_cur.name = "Сервери ЕКампуса"
 		cell_cur.cost_of_cell = 1500
+		self.FieldsArray.append(cell_cur)
 		#Клетка 29 - Шаурмечна
 		cell_cur = Cell_buyable_color()
 		cell_cur.field_number = 29
@@ -285,6 +291,7 @@ class GameConditions():
 		cell_cur.field_number = 35
 		cell_cur.name = "Метро Політехнічний інститут "
 		cell_cur.cost_of_cell = 1500
+		self.FieldsArray.append(cell_cur)
 		#Клетка 36 - Шанс 
 		cell_cur = Cell_Chance()
 		cell_cur.name = "Шанс"
@@ -316,8 +323,8 @@ class GameConditions():
 		self.FieldsArray.append(cell_cur)
 		
 	def PrintFields(self):
-		for i in range (0, 39):
-			print (self.FieldsArray[i].field_number ,self.FieldsArray[i].name)
+		for i in range (0, 40):
+			print (self.FieldsArray[i].field_number, "   ",self.FieldsArray[i].name)
 
 	def GameStart(self):
 		self.CreatePlayers()
@@ -331,13 +338,12 @@ class GameConditions():
 					self.Turn(self.PlayersArray[counter])
 
 	def Turn(self, Player):
-		print("Хід гравця ", Player.name)
-		print("Гравець стоїть на полі типу ", self.FieldsArray[Player.current_field].field_type)
+		print("\nХід ", Player.playernumber, " гравця ", Player.name)
+		print("Гравець стоїть на ", Player.current_field," полі типу ", self.FieldsTypes[self.FieldsArray[Player.current_field].field_type], " під назвою ", self.FieldsArray[Player.current_field].name)
 
 		field = self.FieldsArray[Player.current_field].field_type
 		match field:
 			case 0:
-				print("Стартове поле")
 				self.ThrowDice(Player)
 			case 1:
 				if self.FieldsArray[Player.current_field].owner != None:
@@ -345,15 +351,15 @@ class GameConditions():
 					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
 					self.ThrowDice(Player)
 				else:
-					if int(input("Купляємо? (1/0)")):
+					if int(input("Купляємо? (1/0):   ")):
 						#BUY
 						if(Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field)==1):
-							self.FieldsArray[Player.current_field].owner=Player.playernumber
+							self.FieldsArray[Player.current_field].owner=Player
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
 						if(Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field)==1):
-							self.FieldsArray[Player.current_field].owner = Player.playernumber
+							self.FieldsArray[Player.current_field].owner = Player
 						self.ThrowDice(Player)
 			case 2:
 				if self.FieldsArray[Player.current_field].owner != None:
@@ -362,15 +368,15 @@ class GameConditions():
 
 					self.ThrowDice(Player)
 				else:
-					if int(input("Купляємо? (1/0)")):
+					if int(input("Купляємо? (1/0):   ")):
 						#BUY
 						if (Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
-							self.FieldsArray[Player.current_field].owner = Player.playernumber
+							self.FieldsArray[Player.current_field].owner = Player
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
 						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
-							self.FieldsArray[Player.current_field].owner = Player.playernumber
+							self.FieldsArray[Player.current_field].owner = Player
 						self.ThrowDice(Player)
 			case 3:
 				if self.FieldsArray[Player.current_field].owner != None:
@@ -378,15 +384,15 @@ class GameConditions():
 					Player.tax(self.FieldsArray[Player.current_field].cost,self.FieldsArray[Player.current_field].owner)
 					self.ThrowDice(Player)
 				else:
-					if int(input("Купляємо? (1/0)")):
+					if int(input("Купляємо? (1/0):   ")):
 						#BUY
 						if (Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
-							self.FieldsArray[Player.current_field].owner = Player.playernumber
+							self.FieldsArray[Player.current_field].owner = Player
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
 						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
-							self.FieldsArray[Player.current_field].owner = Player.playernumber
+							self.FieldsArray[Player.current_field].owner = Player
 						self.ThrowDice(Player)
 			case 4:
 				Player.money_deposit(self.FieldsArray[Player.current_field].chance())
@@ -433,4 +439,5 @@ class GameConditions():
 		else:
 			Player.double = 0
 		Player.nextfield(dice)
+		print ("Player ", Player.name, "is now on the ", Player.current_field, "field")
 
