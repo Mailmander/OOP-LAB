@@ -13,7 +13,7 @@ class GameConditions():
 	NumOfFields = 40
 	PlayersArray = []
 	FieldsArray = []
-	FieldsTypes = ["старт", "кольорова", "станция", "спеціальна", "шанс", "вхід у в'язницю", "в'язниця", "податок", "надподаток", "стоянка"]
+	FieldsTypes = ["старт", "кольорова", "станція", "спеціальна", "шанс", "вхід у в'язницю", "в'язниця", "податок", "надподаток", "стоянка"]
 
 	def CreatePlayers(self):
 		self.NumOfPlayers = int(input("Введіть к-ть гравців.\n"))
@@ -350,7 +350,7 @@ class GameConditions():
 			case 1:
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG (num of houses in ownership)
-					Player.tax(self.FieldsArray[Player.current_field].base_arend,self.FieldsArray[Player.current_field].owner)
+					Player.tax(self.FieldsArray[Player.current_field].cost(),self.FieldsArray[Player.current_field].owner)
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0):   ")):
@@ -366,7 +366,7 @@ class GameConditions():
 			case 2:
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG(num of stations in ownership)
-					Player.tax(self.FieldsArray[Player.current_field].base_arend,self.FieldsArray[Player.current_field].owner)
+					Player.tax(self.FieldsArray[Player.current_field].cost(1),self.FieldsArray[Player.current_field].owner)
 
 					self.ThrowDice(Player)
 				else:
@@ -383,7 +383,7 @@ class GameConditions():
 			case 3:
 				if self.FieldsArray[Player.current_field].owner != None:
 					#NALOG(num of fields in ownership) ERROR (line 386)
-					Player.tax(self.FieldsArray[Player.current_field].base_arend,self.FieldsArray[Player.current_field].owner)
+					Player.tax(self.FieldsArray[Player.current_field].cost(1,1),self.FieldsArray[Player.current_field].owner)
 					self.ThrowDice(Player)
 				else:
 					if int(input("Купляємо? (1/0):   ")):
@@ -440,5 +440,5 @@ class GameConditions():
 		else:
 			Player.double = 0
 		Player.nextfield(dice)
-		print ("Player ", Player.name, "is now on the ", Player.current_field, "field")
+		print ("Гравець ", Player.name, "знаходится зараз на ", Player.current_field, "полі")
 

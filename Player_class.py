@@ -27,7 +27,7 @@ class Player():
     def money_withdraw(self,amountofmoney):
 
         if(self.money>amountofmoney):
-            self.money=self.money+amountofmoney
+            self.money=self.money-amountofmoney
         else:
             self.alive = 0
         return
@@ -73,7 +73,7 @@ class Player():
 
     def tax(self,fieldtax,owner):
         if(self.money>=fieldtax):
-            #print("Гравець " + self.name + "виплачує орендну плату у розмірі " + fieldtax + "Гравцю " + owner.name)
+            print("Гравець ", self.name, "виплачує орендну плату у розмірі " , fieldtax , "Гравцю " , owner.name)
             self.money_transferto(owner,fieldtax)
         else:
             self.alive=0
