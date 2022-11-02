@@ -372,7 +372,6 @@ class GameConditions():
 					if int(input("Бажаєте придбати будівлю? (1/0):   ")):
 						Player.money -= self.FieldsArray[Player.current_field].houses_cost
 						self.FieldsArray[Player.current_field].houses += 1
-
 					print("-------------------------------")
 					self.ThrowDice(Player)
 				else:
@@ -439,6 +438,7 @@ class GameConditions():
 				Player.current_field = 10
 				Player.prisoner = 1
 				print("Щасливої прогулянки до в'язниці!")
+				print("-------------------------------")
 			case 6:
 				if Player.prisoner:
 					Player.prisoner = 0
