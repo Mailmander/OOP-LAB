@@ -323,8 +323,8 @@ class GameConditions():
 		self.FieldsArray.append(cell_cur)
 		
 	def PrintFields(self):
-		for i in range (0, 40):
-			print (self.FieldsArray[i].field_number, "   ",self.FieldsArray[i].name)
+		for i in range(0, 40):
+			print(self.FieldsArray[i].field_number, "   ", self.FieldsArray[i].name)
 
 	def GameStart(self):
 		self.CreatePlayers()
@@ -338,95 +338,143 @@ class GameConditions():
 					self.Turn(self.PlayersArray[counter])
 
 	def Turn(self, Player):
-		print("\nХід ", Player.playernumber, " гравця ", Player.name)
-		print("Гравець стоїть на ", Player.current_field," полі типу ", self.FieldsTypes[self.FieldsArray[Player.current_field].field_type], " під назвою ", self.FieldsArray[Player.current_field].name)
+		print("\nХід ", Player.playernumber, "-го гравця, ", Player.name)
+		print("Гравець стоїть на ", Player.current_field," полі, типу '", self.FieldsTypes[self.FieldsArray[Player.current_field].field_type], "', під назвою '", self.FieldsArray[Player.current_field].name, "'")
+		if ((self.FieldsArray[Player.current_field].field_type>=1 and self.FieldsArray[Player.current_field].field_type<=3) and self.FieldsArray[Player.current_field].owner != None):
+			print("Власником цього поля є ", self.FieldsArray[Player.current_field].owner.name)
 		print("Грошики: ", Player.money)
 		print("У гравця є такі поля: ", Player.owned_fields)
+		if self.FieldsArray[Player.current_field].field_type:
+			print("Ваші дії -------------------------------")
 
 		field = self.FieldsArray[Player.current_field].field_type
 		match field:
 			case 0:
 				self.ThrowDice(Player)
 			case 1:
-				if self.FieldsArray[Player.current_field].owner != None:
-					#NALOG (num of houses in ownership)
-					Player.tax(self.FieldsArray[Player.current_field].base_arend,self.FieldsArray[Player.current_field].owner)
-					self.ThrowDice(Player)
-				else:
+				if self.FieldsArray[Player.current_field].owner == None :
 					if int(input("Купляємо? (1/0):   ")):
 						#BUY
 						if(Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field)==1):
 							self.FieldsArray[Player.current_field].owner=Player
+						print("-------------------------------")
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
 						if(Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field)==1):
 							self.FieldsArray[Player.current_field].owner = Player
+						print("-------------------------------")
 						self.ThrowDice(Player)
-			case 2:
-				if self.FieldsArray[Player.current_field].owner != None:
-					#NALOG(num of stations in ownership)
-					Player.tax(self.FieldsArray[Player.current_field].base_arend,self.FieldsArray[Player.current_field].owner)
+				elif self.FieldsArray[Player.current_field].owner == Player:
+					#YOUR FIELD
+					print("Ви потрапили на власне поле з ", self.FieldsArray[Player.current_field].houses, "будівлями."
+						"\nНова будівля коштуватиме: ", self.FieldsArray[Player.current_field].houses_cost)
+					if int(input("Бажаєте придбати будівлю? (1/0):   ")):
+						Player.money -= self.FieldsArray[Player.current_field].houses_cost
+						self.FieldsArray[Player.current_field].houses += 1
 
+					print("-------------------------------")
 					self.ThrowDice(Player)
 				else:
+					# NALOG (num of houses in ownership)
+					Player.tax(self.FieldsArray[Player.current_field].cost(),
+							   self.FieldsArray[Player.current_field].owner)
+					print("-------------------------------")
+					self.ThrowDice(Player)
+			case 2:
+				if self.FieldsArray[Player.current_field].owner == None:
 					if int(input("Купляємо? (1/0):   ")):
 						#BUY
 						if (Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
 							self.FieldsArray[Player.current_field].owner = Player
+							Player.stations += 1
+						print("-------------------------------")
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
 						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
 							self.FieldsArray[Player.current_field].owner = Player
+						print("-------------------------------")
 						self.ThrowDice(Player)
+				elif self.FieldsArray[Player.current_field].owner == Player:
+					#YOUR FIELD
+					print("Ви потрапили на власне поле, у вас ", Player.stations, "станцій.")
+					print("-------------------------------")
+					self.ThrowDice(Player)
+				else:
+					#NALOG(num of stations in ownership)
+					Player.tax(self.FieldsArray[Player.current_field].cost(Player.stations), self.FieldsArray[Player.current_field].owner)
+					print("-------------------------------")
+					self.ThrowDice(Player)
 			case 3:
-				if self.FieldsArray[Player.current_field].owner != None:
-					#NALOG(num of fields in ownership) ERROR (line 386)
-					Player.tax(self.FieldsArray[Player.current_field].base_arend,self.FieldsArray[Player.current_field].owner)
-					self.ThrowDice(Player)
-				else:
+				if self.FieldsArray[Player.current_field].owner == None:
 					if int(input("Купляємо? (1/0):   ")):
 						#BUY
 						if (Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
 							self.FieldsArray[Player.current_field].owner = Player
+							Player.specials += 1
+						print("-------------------------------")
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
 						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
 							self.FieldsArray[Player.current_field].owner = Player
+						print("-------------------------------")
 						self.ThrowDice(Player)
+				elif self.FieldsArray[Player.current_field].owner == Player:
+					#YOUR FIELD
+					print("Ви потрапили на власне поле, у вас ", Player.specials, "спеціальних полів.")
+					print("-------------------------------")
+					self.ThrowDice(Player)
+				else:
+					#NALOG(num of fields in ownership)
+					Player.tax(self.FieldsArray[Player.current_field].cost(Player.specials), self.FieldsArray[Player.current_field].owner)
+					print("-------------------------------")
+					self.ThrowDice(Player)
 			case 4:
 				Player.money_deposit(self.FieldsArray[Player.current_field].chance())
+				print("-------------------------------")
 				self.ThrowDice(Player)
 			case 5:
 				Player.current_field = 10
 				Player.prisoner = 1
+				print("Щасливої прогулянки до в'язниці!")
 			case 6:
 				if Player.prisoner:
+					Player.prisoner = 0
 					for i in range(3):
 						A = random.randint(1, 6)
 						B = random.randint(1, 6)
 						dice = A + B
 						print("Ваши кубики: ", A, " + ", B, " = ", dice)
 						if A==B:
+							print("Ви вийшли завчасно і робите наступний крок")
+							print("-------------------------------")
 							self.ThrowDice(Player)
-							break
-					Player.prisoner = 0
+							return
+					print("Пропуск кроку")
 				else:
+					print("-------------------------------")
 					self.ThrowDice(Player)
 			case 7:
-				Player.money_withdraw(4000)
+				print("Ви сплачуєте 2000 як податок")
+				Player.money_withdraw(2000)
+				print("-------------------------------")
 				self.ThrowDice(Player)
 			case 8:
-				Player.money_withdraw(2000)
+				print("Ви сплачуєте 4000 як надподаток")
+				Player.money_withdraw(4000)
+				print("-------------------------------")
 				self.ThrowDice(Player)
 			case 9:
 				if Player.waiting == 0:
 					Player.waiting = 1
+					print("Пропуск кроку")
 				else:
 					Player.waiting = 0
+					print("-------------------------------")
 					self.ThrowDice(Player)
+
 
 	def ThrowDice(self, Player):
 		A = random.randint(1, 6)
@@ -440,5 +488,5 @@ class GameConditions():
 		else:
 			Player.double = 0
 		Player.nextfield(dice)
-		print ("Player ", Player.name, "is now on the ", Player.current_field, "field")
+		print ("Гравець", Player.name, "зараз на", Player.current_field, "полі")
 

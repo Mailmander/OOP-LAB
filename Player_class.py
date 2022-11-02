@@ -11,6 +11,8 @@ class Player():
         self.prisoner = 0
         self.waiting = 0
         self.alive = 1
+        self.stations = 0
+        self.specials = 0
 
 
     def isowner(self,fieldnumber):
@@ -73,6 +75,7 @@ class Player():
 
     def tax(self,fieldtax,owner):
         if(self.money>=fieldtax):
+            print("Ви платите гроші")
             #print("Гравець " + self.name + "виплачує орендну плату у розмірі " + fieldtax + "Гравцю " + owner.name)
             self.money_transferto(owner,fieldtax)
         else:

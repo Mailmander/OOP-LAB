@@ -33,8 +33,8 @@ class Cell_buyable_stations(Cell_buyable):
 class Cell_buyable_spec(Cell_buyable):
     field_type = 3
     arend_spec = [400, 1000]
-    def cost(self, dice, number_of_builds):
-        return self.arend_spec[number_of_builds-1] * dice
+    def cost(self, number_of_builds): #без dice:     def cost(self, dice, number_of_builds):
+        return self.arend_spec[number_of_builds-1]# * dice
 
 class Cell_Chance (Field):
     field_type = 4
