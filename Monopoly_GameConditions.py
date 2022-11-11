@@ -13,7 +13,7 @@ class GameConditions():
 	NumOfFields = 40
 	PlayersArray = []
 	FieldsArray = []
-	FieldsTypes = ["старт", "кольорова", "станция", "спеціальна", "шанс", "вхід у в'язницю", "в'язниця", "податок", "надподаток", "стоянка"]
+	FieldsTypes = ["старт", "кольорова", "станція", "спеціальна", "шанс", "вхід у в'язницю", "в'язниця", "податок", "надподаток", "стоянка"]
 
 	def CreatePlayers(self):
 		self.NumOfPlayers = int(input("Введіть к-ть гравців.\n"))
@@ -24,6 +24,7 @@ class GameConditions():
 	def CreateFields(self):
 		# Клетка 0 - старт
 		cell_cur = Field()
+		cell_cur.name = "ДЕКАНАТ"
 		cell_cur.field_type = 0
 		cell_cur.field_number = 0
 		self.FieldsArray.append(cell_cur)
@@ -338,14 +339,14 @@ class GameConditions():
 					self.Turn(self.PlayersArray[counter])
 
 	def Turn(self, Player):
-		print("\nХід ", Player.playernumber, "-го гравця, ", Player.name)
+		print("\nХід ", Player.playernumber+1, "-го гравця, ", Player.name)
 		print("Гравець стоїть на ", Player.current_field," полі, типу '", self.FieldsTypes[self.FieldsArray[Player.current_field].field_type], "', під назвою '", self.FieldsArray[Player.current_field].name, "'")
 		if ((self.FieldsArray[Player.current_field].field_type>=1 and self.FieldsArray[Player.current_field].field_type<=3) and self.FieldsArray[Player.current_field].owner != None):
 			print("Власником цього поля є ", self.FieldsArray[Player.current_field].owner.name)
 		print("Грошики: ", Player.money)
 		print("У гравця є такі поля: ", Player.owned_fields)
 		if self.FieldsArray[Player.current_field].field_type:
-			print("Ваші дії -------------------------------")
+			print("Ваші дії ----------------------")
 
 		field = self.FieldsArray[Player.current_field].field_type
 		match field:
@@ -361,8 +362,9 @@ class GameConditions():
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
-						if(Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field)==1):
+						if(Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field,self.PlayersArray)==1):
 							self.FieldsArray[Player.current_field].owner = Player
+
 						print("-------------------------------")
 						self.ThrowDice(Player)
 				elif self.FieldsArray[Player.current_field].owner == Player:
@@ -370,7 +372,7 @@ class GameConditions():
 					print("Ви потрапили на власне поле з ", self.FieldsArray[Player.current_field].houses, "будівлями."
 						"\nНова будівля коштуватиме: ", self.FieldsArray[Player.current_field].houses_cost)
 					if int(input("Бажаєте придбати будівлю? (1/0):   ")):
-						Player.money -= self.FieldsArray[Player.current_field].houses_cost
+						Player.money_withdraw(self.FieldsArray[Player.current_field].houses_cost)
 						self.FieldsArray[Player.current_field].houses += 1
 					print("-------------------------------")
 					self.ThrowDice(Player)
@@ -391,8 +393,10 @@ class GameConditions():
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
-						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
+						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field,self.PlayersArray) == 1):
 							self.FieldsArray[Player.current_field].owner = Player
+
+
 						print("-------------------------------")
 						self.ThrowDice(Player)
 				elif self.FieldsArray[Player.current_field].owner == Player:
@@ -416,7 +420,7 @@ class GameConditions():
 						self.ThrowDice(Player)
 					else:
 						#AUKCION
-						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
+						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field,self.PlayersArray) == 1):
 							self.FieldsArray[Player.current_field].owner = Player
 						print("-------------------------------")
 						self.ThrowDice(Player)

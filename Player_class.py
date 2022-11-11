@@ -1,11 +1,12 @@
-#from Monopoly_GameConditions import GameConditions
+
 class Player():
     def __init__(self, playernumber):
-        self.name = input("Введіть ім'я гравця.\n")
+        print("Введіть ім'я гравця №",playernumber+1)
+        self.name = input()
         self.money = 20000
         self.playernumber = playernumber
         self.owned_fields=[]
-        self.fields_tosell=[]
+        self.fields_tosell=[] #Wil be soon...
         self.current_field=0
         self.double = 0
         self.prisoner = 0
@@ -82,18 +83,21 @@ class Player():
             print("В Цього Гравця нема таких грошей :(")
 
 
-    def auction(self,fieldprice,field):
-        i=0
-        newprice=fieldprice+100
-        while():
-            if(GameConditions.PlayersArray[i] != self & GameConditions.PlayersArray[i].money>=newprice):
-                print(GameConditions.PlayersArray[i].name + " може купити це поле за " + newprice)
-                if(input("Так")):
-                    if(GameConditions.PlayersArray[i].buy_newfield(newprice,field)==1):
-                        return 1
-                else:
-                    newprice=newprice+100
-            i=(i+1)%GameConditions.NumOfPlayers
+    def auction(self,fieldprice,field,PlayersArray):
+        print("Ця фіча буде додана в наступному глобальному оновленні")
+        #i=len(PlayersArray)
+        #m=i-1
+        #will=1
+        #newprice=fieldprice+100
+        #while(i!=0):
+         #   if(PlayersArray[m].playernumber != self.playernumber & PlayersArray[m].money>=newprice):
+          #      print(PlayersArray[m].name + " може купити це поле за " + newprice)
+           #     if(input("Так")):
+            #        if(PlayersArray[m].buy_newfield(newprice,field)==1):
+             #           return 1
+              #  else:
+               #     newprice=newprice+100
+            #i=(i+1)%i
         return 0
 
 
