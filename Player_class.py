@@ -1,8 +1,7 @@
-
+from Interface import GamePrint
 class Player():
     def __init__(self, playernumber):
-        print("Введіть ім'я гравця №",playernumber+1)
-        self.name = input()
+        self.name = GamePrint.type_name(self,playernumber)
         self.money = 20000
         self.playernumber = playernumber
         self.owned_fields=[]
@@ -33,6 +32,7 @@ class Player():
             self.money=self.money-amountofmoney
         else:
             self.alive = 0
+            print("Гравець ", self.playernumber+1, " відправився в НАУ")
         return
 
 
@@ -48,7 +48,7 @@ class Player():
             self.owned_fields.append(fieldnumber)
             return 1
         else:
-            print("Грошиків тобі не вистачає друже :(")
+            GamePrint.lowmoney()
             return 0
 
     def field_deposit(self,field,deposit):
@@ -72,19 +72,19 @@ class Player():
             self.money=self.money-sum
             userto.money = userto.money + sum
         else:
-            print("В Цього Гравця нема таких грошей :(")
+            GamePrint.money_transfer_failure()
 
     def tax(self,fieldtax,owner):
         if(self.money>=fieldtax):
-            print("Гравець ", self.name, "виплачує орендну плату у розмірі " , fieldtax , "Гравцю " , owner.name)
+            GamePrint.tax_pay(self,fieldtax,owner)
             self.money_transferto(owner,fieldtax)
         else:
             self.alive=0
-            print("В Цього Гравця нема таких грошей :(")
+            GamePrint.money_transfer_failure()
 
 
     def auction(self,fieldprice,field,PlayersArray):
-        print("Ця фіча буде додана в наступному глобальному оновленні")
+        GamePrint.future_update()
         #i=len(PlayersArray)
         #m=i-1
         #will=1

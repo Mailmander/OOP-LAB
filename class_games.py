@@ -1,5 +1,5 @@
 import random
-
+from Interface import GamePrint
 class Field():
     name = "Default"
     field_type = 0 #0 - старт, 1 - цветная, 2 - станция, 3 - специальная, 4 - шанс, 5 - вход в тюрьму, 6 - тюрьма, 7 - налог, 8 - сверхналог, 9 - стоянка. 
@@ -40,35 +40,26 @@ class Cell_Chance (Field):
     field_type = 4
     def chance(self):
         k = random.randint(1, 10)
+        GamePrint.chance_print(k)
         match k:
-            case 1: 
-                print("Травонувся шаурмою, мінус 1000 гривень на ліки")
+            case 1:
                 return -1000
-            case 2: 
-                print("Пацани з НАУ набили лице за 35-м корпусом, мінус 200")
+            case 2:
                 return -200
-            case 3: 
-                print("Ви з пацанами набили лице студенту НАУ, плюс 200")
+            case 3:
                 return 200
-            case 4: 
-                print("Мінарченко дав гроші за макулатуру для розтаплювання дачі, плюс 300")
+            case 4:
                 return 300
-            case 5: 
-                print("У вас днюха! Ві всіх пригощаете пивом на поляні. Мінус 300")
+            case 5:
                 return -300
-            case 6: 
-                print("Джекпот! Вам скинулись за паль РГР по ЧМ! Плюс 1000!")
+            case 6:
                 return -200
-            case 7: 
-                print("Тест шанса, как же много надо придумывать, -200iq momment")
+            case 7:
                 return -200
-            case 8: 
-                print("Тест шанса, как же много надо придумывать, -200iq momment")
+            case 8:
                 return -200
-            case 9: 
-                print("Тест шанса, как же много надо придумывать, -200iq momment")
+            case 9:
                 return -200
-            case 10: 
-                print("Тест шанса, как же много надо придумывать, -200iq momment")
+            case 10:
                 return -200
 
