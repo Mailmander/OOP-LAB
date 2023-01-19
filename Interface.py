@@ -93,3 +93,7 @@ class GamePrint():
         print()
         print()
 
+    @staticmethod
+    def end_message(winner):
+        print("Сессію пережив лише один гравець - один переможець і це: ", winner)
+

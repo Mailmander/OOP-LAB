@@ -336,16 +336,21 @@ class GameConditions():
 		counter = -1
 		self.death_check = 0
 		while True:
-			counter = (counter+1)%self.NumOfPlayers
+			counter=counter+1
+			print(counter)
+			if (counter == self.NumOfPlayers):
+				counter = 0
+				self.death_check = 0
 
 			if (self.PlayersArray[counter].alive == 0):
-				self.death_check+=1;
-				if self.death_check == self.NumOfPlayers:
+				self.death_check+=1
+				if self.death_check == self.NumOfPlayers-1:
 					# ALL DEAAAAAAD, END OF GAME
+					GamePrint.end_message(winner)
 					break
 
 			elif(self.PlayersArray[counter].alive == 1):
-				self.death_check = 0
+				winner = self.PlayersArray[counter].name
 				self.Turn(self.PlayersArray[counter])
 				while self.PlayersArray[counter].double:
 					self.Turn(self.PlayersArray[counter])
