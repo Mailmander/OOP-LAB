@@ -334,9 +334,18 @@ class GameConditions():
 		self.CreatePlayers()
 		self.CreateFields()
 		counter = -1
+		death_check = 0
 		while True:
 			counter = (counter+1)%self.NumOfPlayers
-			if(self.PlayersArray[counter].alive == 1):
+
+			if (self.PlayersArray[counter].alive == 0):
+				death_check+=1;
+				if death_check == self.NumOfPlayers:
+					# ALL DEAAAAAAD, END OF GAME
+					break
+
+			elif(self.PlayersArray[counter].alive == 1):
+				death_check = 0
 				self.Turn(self.PlayersArray[counter])
 				while self.PlayersArray[counter].double:
 					self.Turn(self.PlayersArray[counter])
