@@ -13,6 +13,8 @@ class Player():
         self.alive = 1
         self.stations = 0
         self.specials = 0
+        self.earned = 0
+        self.spended = 0
 
 
     def isowner(self,fieldnumber):
@@ -22,6 +24,7 @@ class Player():
 
         if(self.money>=-amountofmoney):
             self.money=self.money+amountofmoney
+            self.earned=self.earned+amountofmoney
         else:
             self.alive=0
         return
@@ -30,6 +33,7 @@ class Player():
 
         if(self.money>amountofmoney):
             self.money=self.money-amountofmoney
+            self.spended=self.spended-amountofmoney
         else:
             self.alive = 0
             print("Гравець ", self.playernumber+1, " відправився в НАУ")
@@ -70,7 +74,9 @@ class Player():
     def money_transferto(self,userto,sum):
         if(self.money>sum & sum > 0 ):
             self.money=self.money-sum
+            self.spended=self.spended-sum
             userto.money = userto.money + sum
+            userto.earned = userto.earned + sum
         else:
             GamePrint.money_transfer_failure()
 
@@ -83,7 +89,8 @@ class Player():
             GamePrint.money_transfer_failure()
 
     def stats(self):
-        GamePrint.stat_print(self.playernumber)
+        numofter=len(self.owned_fields)
+        GamePrint.stat_print(self.name,self.earned,self.spended,numofter)
 
 
     def auction(self,fieldprice,field,PlayersArray):

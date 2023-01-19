@@ -186,8 +186,11 @@ class GamePrint():
         print("Для гравця ", player, " в кінці гри не буде виводитись статистика")
 
     @staticmethod
-    def stat_print(Playerid):
-        print("Stats:")
+    def stat_print(Name,Earned,Spent,Ters):
+        print("\nСтатистика Гравця ", Name, ":")
+        print("Заробив грошиків: ", Earned)
+        print("Витратив стипендії: ", Spent)
+        print("На момент відправлення в НАУ мав стільки територій:", Ters)
 
 
 
