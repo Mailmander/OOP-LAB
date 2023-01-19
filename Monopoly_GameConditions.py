@@ -352,6 +352,7 @@ class GameConditions():
 				if self.death_check == self.NumOfPlayers-1:
 					# ALL DEAAAAAAD, END OF GAME
 					GamePrint.end_message(winner)
+					Stats.Stat_Time(self.PlayersArray)
 					break
 
 			elif(self.PlayersArray[counter].alive == 1):

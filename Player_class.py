@@ -82,6 +82,9 @@ class Player():
             self.alive=0
             GamePrint.money_transfer_failure()
 
+    def stats(self):
+        GamePrint.stat_print(self.playernumber)
+
 
     def auction(self,fieldprice,field,PlayersArray):
         GamePrint.future_update()

@@ -185,6 +185,11 @@ class GamePrint():
     def removestat_player(player):
         print("Для гравця ", player, " в кінці гри не буде виводитись статистика")
 
+    @staticmethod
+    def stat_print(Playerid):
+        print("Stats:")
+
+
 
 
 

@@ -1,4 +1,5 @@
 from Interface import GamePrint
+from Player_class import Player
 class Stats ():
     PlayerStats=[]
     def AddForPlayers(self,id):
@@ -23,3 +24,10 @@ class Stats ():
             Stats.RemovePlayer(self,Player.playernumber)
         elif(Stats.Subcheck(self,Player.playernumber)==0):
             Stats.AddForPlayers(self,Player.playernumber)
+
+    @staticmethod
+    def Stat_Time(Players):
+        for i in range(len(Stats.PlayerStats)):
+            Players[Stats.PlayerStats[i]].stats()
+
+
