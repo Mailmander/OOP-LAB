@@ -86,3 +86,10 @@ class GamePrint():
     def chance_print(id):
         print(GamePrint.Chances[id])
 
+    @staticmethod
+    def menu_out():
+        print()
+        print()
+        print()
+        print()
+

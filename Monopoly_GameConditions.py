@@ -334,24 +334,26 @@ class GameConditions():
 		self.CreatePlayers()
 		self.CreateFields()
 		counter = -1
-		death_check = 0
+		self.death_check = 0
 		while True:
 			counter = (counter+1)%self.NumOfPlayers
 
 			if (self.PlayersArray[counter].alive == 0):
-				death_check+=1;
-				if death_check == self.NumOfPlayers:
+				self.death_check+=1;
+				if self.death_check == self.NumOfPlayers:
 					# ALL DEAAAAAAD, END OF GAME
 					break
 
 			elif(self.PlayersArray[counter].alive == 1):
-				death_check = 0
+				self.death_check = 0
 				self.Turn(self.PlayersArray[counter])
 				while self.PlayersArray[counter].double:
 					self.Turn(self.PlayersArray[counter])
 
 	def Turn(self, Player):
 		GamePrint.StartPrint(self, Player)  # previous version|      GamePrint.StartPrint(self, Player)
+
+
 
 		type_of_field = self.FieldsArray[Player.current_field].field_type
 		match type_of_field:

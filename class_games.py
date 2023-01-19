@@ -9,8 +9,7 @@ class Field():
     def __init__(self):
         pass
 
-    @staticmethod
-    def action():
+    def action(self):
         pass
 
 
@@ -148,16 +147,15 @@ class Cell_Chance (Field):
 
 
 class Cell_Prizon_Enter (Field):
-    @staticmethod
-    def action(Player):
+
+    def action(self, Player):
         Player.current_field = 10
         Player.prisoner = 1
         GamePrint.prison_notification()
         GamePrint.actionend()
 
 class Cell_Prizon(Field):
-    @staticmethod
-    def action(Player):
+    def action(self, Player):
         if Player.prisoner:
             Player.prisoner = 0
             for i in range(3):
@@ -172,22 +170,19 @@ class Cell_Prizon(Field):
             GamePrint.actionend()
 
 class Cell_Tax(Field):
-    @staticmethod
-    def action(Player):
+    def action(self, Player):
         GamePrint.extratax(2000)
         Player.money_withdraw(2000)
         GamePrint.actionend()
 
 class Cell_Super_Tax(Field):
-    @staticmethod
-    def action(Player):
+    def action(self, Player):
         GamePrint.extratax(4000)
         Player.money_withdraw(4000)
         GamePrint.actionend()
 
 class Cell_Waiter(Field):
-    @staticmethod
-    def action(Player):
+    def action(self, Player):
         if Player.waiting == 0:
             Player.waiting = 1
             GamePrint.skip()
