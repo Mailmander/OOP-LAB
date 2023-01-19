@@ -347,7 +347,7 @@ class GameConditions():
 		type_of_field = self.FieldsArray[Player.current_field].field_type
 		match type_of_field:
 			case 0:
-				self.FieldsArray[Player.current_field].action(Player)
+				pass
 			case 1:
 				self.FieldsArray[Player.current_field].action(Player, self.FieldsArray[Player.current_field], self.PlayersArray)
 			case 2:
