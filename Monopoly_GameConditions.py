@@ -373,12 +373,7 @@ class GameConditions():
 
 	def Turn(self, Player):
 
-
-
-
 		GamePrint.StartPrint(self, Player)  # previous version|      GamePrint.StartPrint(self, Player)
-
-
 
 		type_of_field = self.FieldsArray[Player.current_field].field_type
 		match type_of_field:

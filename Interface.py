@@ -114,4 +114,44 @@ class GamePrint():
     def Menu_end():
         print("Кінець гри!")
 
+    @staticmethod
+    def Iter_decise():
+        type = -1
+        case = -1
+        identifier = -1
+
+        print("Методи виводу:")
+        print("   1. За типом (для полів)")
+        print("   2. За назвою (для полів та гравців)")
+        print("   3. Планування машруту (для полів)")
+        type = int(input("Введіть метод виводу:\n"))
+        match type:
+            case 1:
+                print("Типи полів:")
+                print("   1. Покупні кольорові")
+                print("   2. Покупні станції та спеціальні")
+                print("   3. Унікальні ігрові")
+                print("   4. Всі")
+                identifier = int(input("Введіть тип полів:\n"))
+            case 2:
+                print("Кого/що шукати:")
+                print("   1. Поле")
+                print("   2. Гравця")
+                case = int(input("Оберіть, кого шукати:\n"))
+                identifier = int(input("Введіть назву/ім'я:\n"))
+            case 3:
+                print("Планування маршруту:")
+                print("   1. Вручну")
+                print("   2. Випадково")
+                case = int(input("Як спланувати маршрут?:\n"))
+                match case:
+                    case 1:
+                        identifier = int(input("Введіть номери полів через пробіл").split())
+                    case 2:
+                        input("vip")
+
+        return [type, case, identifier]
+
+
+
 
