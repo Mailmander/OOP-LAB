@@ -17,6 +17,7 @@ class Stats ():
             counter=counter+1
         return 0
 
+
     def Changestat(self,Player):
         if(Stats.Subcheck(self,Player.playernumber)):
             Stats.RemovePlayer(self,Player.playernumber)
