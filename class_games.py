@@ -6,10 +6,10 @@ class Field():
     name = "Default"
     field_type = 0 #0 - старт, 1 - цветная, 2 - станция, 3 - специальная, 4 - шанс, 5 - вход в тюрьму, 6 - тюрьма, 7 - налог, 8 - сверхналог, 9 - стоянка. 
     field_number = -1
-    def __init__(self):
-        pass
 
-    def action(self):
+
+    @staticmethod
+    def action(Player):
         pass
 
 
@@ -147,15 +147,16 @@ class Cell_Chance (Field):
 
 
 class Cell_Prizon_Enter (Field):
-
-    def action(self, Player):
+    @staticmethod
+    def action(Player):
         Player.current_field = 10
         Player.prisoner = 1
         GamePrint.prison_notification()
         GamePrint.actionend()
 
 class Cell_Prizon(Field):
-    def action(self, Player):
+    @staticmethod
+    def action(Player):
         if Player.prisoner:
             Player.prisoner = 0
             for i in range(3):
@@ -170,19 +171,22 @@ class Cell_Prizon(Field):
             GamePrint.actionend()
 
 class Cell_Tax(Field):
-    def action(self, Player):
+    @staticmethod
+    def action(Player):
         GamePrint.extratax(2000)
         Player.money_withdraw(2000)
         GamePrint.actionend()
 
 class Cell_Super_Tax(Field):
-    def action(self, Player):
+    @staticmethod
+    def action(Player):
         GamePrint.extratax(4000)
         Player.money_withdraw(4000)
         GamePrint.actionend()
 
 class Cell_Waiter(Field):
-    def action(self, Player):
+    @staticmethod
+    def action(Player):
         if Player.waiting == 0:
             Player.waiting = 1
             GamePrint.skip()
