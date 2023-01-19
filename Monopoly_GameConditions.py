@@ -350,11 +350,32 @@ class GameConditions():
 
 			elif(self.PlayersArray[counter].alive == 1):
 				winner = self.PlayersArray[counter].name
-				self.Turn(self.PlayersArray[counter])
-				while self.PlayersArray[counter].double:
-					self.Turn(self.PlayersArray[counter])
+				Menu_result = self.Menu(self.PlayersArray[counter])
+				if Menu_result == -1:
+					break
+
+				#self.Turn(self.PlayersArray[counter])
+
+	def Menu(self, Player):
+		answer = GamePrint.Menu_Main()
+		match answer:
+			case 1:
+				self.Turn(Player)
+				while Player.double:
+					self.Turn(Player)
+
+			case 2:
+				GamePrint.Menu_iterator()
+
+			case 3:
+				GamePrint.Menu_end()
+				return -1
 
 	def Turn(self, Player):
+
+
+
+
 		GamePrint.StartPrint(self, Player)  # previous version|      GamePrint.StartPrint(self, Player)
 
 

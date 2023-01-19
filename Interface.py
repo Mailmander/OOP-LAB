@@ -97,3 +97,21 @@ class GamePrint():
     def end_message(winner):
         print("Сессію пережив лише один гравець - один переможець і це: ", winner)
 
+
+    @staticmethod
+    def Menu_Main():
+        print("\n--------------------------")
+        print("|                        |")
+        print("|          Меню          |")
+        print("|                        |")
+        print("|     1. Зробити крок    |")
+        print("| 2. Подрібна інформація |")
+        print("|    3. Закінчити гру    |")
+        print("|                        |")
+        print("--------------------------")
+        return int(input("(введіть 1/2/3:)\n"))
+    @staticmethod
+    def Menu_end():
+        print("Кінець гри!")
+
+
