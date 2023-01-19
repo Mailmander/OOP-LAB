@@ -12,5 +12,5 @@ class Iterator():
 
     search_type = 0
 
-    def decise(self):
-        GamePrint.Iter_decise
+    def decise(self, Player):
+        GamePrint.Iter_decise(Player)

@@ -1,3 +1,6 @@
+
+import random as r
+
 class GamePrint():
     Chances = ["Травонувся шаурмою, мінус 1000 гривень на ліки","Пацани з НАУ набили лице за 35-м корпусом, мінус 200","Ви з пацанами набили лице студенту НАУ, плюс 200","Мінарченко дав гроші за макулатуру для розтаплювання дачі, плюс 300","У вас днюха! Ві всіх пригощаете пивом на поляні. Мінус 300","Джекпот! Вам скинулись за паль РГР по ЧМ! Плюс 1000!","Тест шанса, как же много надо придумывать, -200iq momment","Тест шанса, как же много надо придумывать, -200iq momment","Тест шанса, как же много надо придумывать, -200iq momment","Тест шанса, как же много надо придумывать, -200iq momment"]
     FieldsTypes = ["старт", "кольорова", "станція", "спеціальна", "шанс", "вхід у в'язницю", "в'язниця", "податок",
@@ -115,7 +118,7 @@ class GamePrint():
         print("Кінець гри!")
 
     @staticmethod
-    def Iter_decise():
+    def Iter_decise(Player):
         type = -1
         case = -1
         identifier = -1
@@ -148,8 +151,13 @@ class GamePrint():
                     case 1:
                         identifier = int(input("Введіть номери полів через пробіл").split())
                     case 2:
-                        input("vip")
-
+                        identifier = []
+                        position = Player.current_field
+                        k = r.randint(2.10)+1
+                        for i in range(1, k):
+                            position = (position + r.randint(1,6) + r.randint(1,6)) % 40
+                            identifier.append(position)
+                        print(identifier)
         return [type, case, identifier]
 
 
