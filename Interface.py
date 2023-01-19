@@ -123,59 +123,58 @@ class GamePrint():
         case = -1
         identifier = -1
 
-        print("Методи виводу:")
+        print("\nМетоди виводу:")
         print("   1. За типом (для полів)")
         print("   2. За назвою (для полів та гравців)")
         print("   3. Планування машруту (для полів)")
         type = int(input("Введіть метод виводу:\n"))
         match type:
             case 1:
-                print("Типи полів:")
+                print("\nТипи полів:")
                 print("   1. Покупні кольорові")
                 print("   2. Покупні станції та спеціальні")
                 print("   3. Унікальні ігрові")
                 print("   4. Всі")
                 identifier = int(input("Введіть тип полів:\n"))
             case 2:
-                print("Кого/що шукати:")
+                print("\nКого/що шукати:")
                 print("   1. Поле")
                 print("   2. Гравця")
                 case = int(input("Оберіть, кого шукати:\n"))
-                identifier = int(input("Введіть назву/ім'я:\n"))
+                identifier = str(input("Введіть назву/ім'я:\n"))
             case 3:
-                print("Планування маршруту:")
+                print("\nПланування маршруту:")
                 print("   1. Вручну")
                 print("   2. Випадково")
-                case = int(input("Як спланувати маршрут?:\n"))
+                case = int(input("Як спланувати маршрут?\n"))
                 match case:
                     case 1:
-                        identifier = int(input("Введіть номери полів через пробіл").split())
+                        identifier = input("\nВведіть номери полів через пробіл:\n").split()
                     case 2:
                         identifier = []
                         position = Player.current_field
-                        k = r.randint(2.10)+1
+                        k = r.randint(2, 10)+1
                         for i in range(1, k):
-                            position = (position + r.randint(1,6) + r.randint(1,6)) % 40
+                            position = (position + r.randint(1, 6) + r.randint(1, 6)) % 40
                             identifier.append(position)
                         print(identifier)
         return [type, case, identifier]
 
 
-
+    @classmethod
     def Iter_print_field(self, field):
         if field.field_type >=1 and field.field_type <=3:
-            print("\nНомер поля - ", field.field_number, "; назва - ", field.name, "; тип - ", field.field_type,
-                  self.FieldsTypes[field.field_type],"; власник - ", field.owner, "; вартість - ", field.cost_of_cell,"\n")
+            print("Номер поля - ", field.field_number, "; назва - ", field.name, "; тип - ", field.field_type,
+                  self.FieldsTypes[field.field_type],"; власник - ", field.owner, "; вартість - ", field.cost_of_cell)
         else:
-            print("\nНомер поля - ", field.field_number, "; назва - ", field.name, "; тип - ", field.field_type,
-                  self.FieldsTypes[field.field_type],"\n")
+            print("Номер поля - ", field.field_number, "; назва - ", field.name, "; тип - ", field.field_type,
+                  self.FieldsTypes[field.field_type])
 
 
     @staticmethod
     def Iter_print_player(player):
-        print("\nНомер гравця - ", player.playernumber, "; ім'я - ", player.name, "; гроші - ", player.money,
-            "; власник полів - ", player.owned_fields, "; позиція - ", player.current_field,
-            "\n")
+        print("Номер гравця - ", player.playernumber, "; ім'я - ", player.name, "; гроші - ", player.money,
+            "; власник полів - ", player.owned_fields, "; позиція - ", player.current_field)
 
 
 
