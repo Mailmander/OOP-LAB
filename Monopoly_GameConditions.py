@@ -337,7 +337,6 @@ class GameConditions():
 		self.death_check = 0
 		while True:
 			counter=counter+1
-			print(counter)
 			if (counter == self.NumOfPlayers):
 				counter = 0
 				self.death_check = 0
