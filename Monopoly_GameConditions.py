@@ -7,12 +7,14 @@ from Iterator_Pattern import Iterator
 
 from Player_class import Player
 from Interface import GamePrint
+from Statistics import Stats
 import random
 from class_games import Field
 from class_games import Cell_buyable_color
 from class_games import Cell_buyable_stations
 from class_games import Cell_buyable_spec
 from class_games import Cell_Chance
+
 
 
 class GameConditions():
@@ -374,10 +376,10 @@ class GameConditions():
 				sub_iterator.search()
 
 
-
-
-
 			case 3:
+				Stats.Changestat(self,Player)
+
+			case 4:
 				GamePrint.Menu_end()
 				return -1
 

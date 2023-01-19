@@ -108,11 +108,12 @@ class GamePrint():
         print("|          Меню          |")
         print("|                        |")
         print("|     1. Зробити крок    |")
-        print("| 2. Подрібна інформація |")
-        print("|    3. Закінчити гру    |")
+        print("| 2. Детальна інформація |")
+        print("| 3. Вивести статистику  |")
+        print("| 4. Завершити гру       |")
         print("|                        |")
         print("--------------------------")
-        return int(input("(введіть 1/2/3:)\n"))
+        return int(input("(введіть 1/2/3/4:)\n"))
     @staticmethod
     def Menu_end():
         print("Кінець гри!")
@@ -175,6 +176,14 @@ class GamePrint():
     def Iter_print_player(player):
         print("Номер гравця - ", player.playernumber, "; ім'я - ", player.name, "; гроші - ", player.money,
             "; власник полів - ", player.owned_fields, "; позиція - ", player.current_field)
+
+    @staticmethod
+    def addstat_player(player):
+        print("Для гравця ", player ," в кінці гри виведится статистика")
+
+    @staticmethod
+    def removestat_player(player):
+        print("Для гравця ", player, " в кінці гри не буде виводитись статистика")
 
 
 
