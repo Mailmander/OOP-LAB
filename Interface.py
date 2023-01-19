@@ -27,10 +27,10 @@ class GamePrint():
     @staticmethod
     def actionend():
         print("-------------------------------")
-    def field_update(self,Player):
-        print("Ви потрапили на власне поле з ", self.FieldsArray[Player.current_field].houses, "будівлями."
+    def field_update(field,Player):
+        print("Ви потрапили на власне поле з ", field.houses, "будівлями."
                                                                                                "\nНова будівля коштуватиме: ",
-              self.FieldsArray[Player.current_field].houses_cost)
+              field.houses_cost)
         if int(input("Бажаєте придбати будівлю? (1/0):   ")):
             return 1
         print("-------------------------------")
@@ -84,7 +84,7 @@ class GamePrint():
 
     @staticmethod
     def chance_print(id):
-        print(GamePrint.Chances[id])
+        print(GamePrint.Chances[id-1])
 
     @staticmethod
     def menu_out():

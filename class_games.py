@@ -46,7 +46,7 @@ class Cell_buyable_color(Cell_buyable):
                 GamePrint.actionend()
         elif field.owner == Player:
             # YOUR FIELD
-            if GamePrint.field_update(self, Player):  # self from GameConditions in Class_Games won't work
+            if GamePrint.field_update(field, Player):  # self from GameConditions in Class_Games won't work
                 Player.money_withdraw(field.houses_cost)
                 field.houses += 1
             GamePrint.actionend()
