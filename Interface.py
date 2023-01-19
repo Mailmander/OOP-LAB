@@ -161,5 +161,14 @@ class GamePrint():
         return [type, case, identifier]
 
 
+    @staticmethod
+    def Iter_print_field(field):
+        print()
+
+    @staticmethod
+    def Iter_print_player(player):
+        print()
+
+
 
 
