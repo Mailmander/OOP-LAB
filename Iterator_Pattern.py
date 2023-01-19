@@ -17,7 +17,14 @@ class Iterator():
     def decise(self, Player):
         self.map = GamePrint.Iter_decise(Player)
 
-        iterator = Iter_Type_Field()
+        match self.map[0]:
+            case 1:
+                obj = Iter_Type_Field()
+            case 2:
+                obj = Iter_Name()
+            case 3:
+                obj = Iter_Plan()
+        return obj
 
 
 class Iter_Type_Field (Iterator):

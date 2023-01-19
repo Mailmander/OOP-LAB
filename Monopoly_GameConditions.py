@@ -1,5 +1,9 @@
 from cgi import FieldStorage
 
+from Iterator_Pattern import Iterator
+#from Iterator_Pattern import Iter_Type_Field
+#from Iterator_Pattern import Iter_Name
+#from Iterator_Pattern import Iter_Plan
 
 from Player_class import Player
 from Interface import GamePrint
@@ -365,7 +369,13 @@ class GameConditions():
 					self.Turn(Player)
 
 			case 2:
-				GamePrint.Menu_iterator()
+				iterator = Iterator(self.FieldsArray, self.PlayersArray, self.NumOfPlayers)
+				sub_iterator = iterator.decise(Player)
+				sub_iterator.search()
+
+
+
+
 
 			case 3:
 				GamePrint.Menu_end()

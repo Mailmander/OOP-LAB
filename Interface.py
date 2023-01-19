@@ -161,13 +161,21 @@ class GamePrint():
         return [type, case, identifier]
 
 
-    @staticmethod
-    def Iter_print_field(field):
-        print()
+
+    def Iter_print_field(self, field):
+        if field.field_type >=1 and field.field_type <=3:
+            print("\nНомер поля - ", field.field_number, "; назва - ", field.name, "; тип - ", field.field_type,
+                  self.FieldsTypes[field.field_type],"; власник - ", field.owner, "; вартість - ", field.cost_of_cell,"\n")
+        else:
+            print("\nНомер поля - ", field.field_number, "; назва - ", field.name, "; тип - ", field.field_type,
+                  self.FieldsTypes[field.field_type],"\n")
+
 
     @staticmethod
     def Iter_print_player(player):
-        print()
+        print("\nНомер гравця - ", player.playernumber, "; ім'я - ", player.name, "; гроші - ", player.money,
+            "; власник полів - ", player.owned_fields, "; позиція - ", player.current_field,
+            "\n")
 
 
 
