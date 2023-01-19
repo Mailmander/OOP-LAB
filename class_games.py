@@ -1,11 +1,19 @@
 import random
 from Interface import GamePrint
+from Player_class import Player
+
 class Field():
     name = "Default"
     field_type = 0 #0 - старт, 1 - цветная, 2 - станция, 3 - специальная, 4 - шанс, 5 - вход в тюрьму, 6 - тюрьма, 7 - налог, 8 - сверхналог, 9 - стоянка. 
     field_number = -1
     def __init__(self):
         pass
+
+    @staticmethod
+    def action():
+        pass
+
+
 
 class Cell_buyable(Field):
     cost_of_cell = 0
@@ -24,17 +32,88 @@ class Cell_buyable_color(Cell_buyable):
     def cost(self):
         return self.base_arend*self.houses+1000
 
+    def action(self, Player, field, players_array):
+        if field.owner == None:
+            if GamePrint.buyoption():
+                # BUY
+                if (Player.buy_newfield(field.cost_of_cell, Player.current_field) == 1):
+                    field.owner = Player
+                GamePrint.actionend()
+            else:
+                # AUKCION
+                if (Player.auction(field.cost_of_cell, Player.current_field, players_array) == 1):
+                    field.owner = Player
+
+                GamePrint.actionend()
+        elif field.owner == Player:
+            # YOUR FIELD
+            if GamePrint.field_update(self, Player):  # self from GameConditions in Class_Games won't work
+                Player.money_withdraw(field.houses_cost)
+                field.houses += 1
+            GamePrint.actionend()
+        else:
+            # NALOG (num of houses in ownership)
+            Player.tax(field.cost(),
+                       field.owner)
+            GamePrint.actionend()
+
+
 class Cell_buyable_stations(Cell_buyable):
     field_type = 2
     arend_rail = [25, 50, 100, 200]
     def cost(self, number_of_builds):
         return self.arend_rail[number_of_builds-1]
+    def action(self, Player, field, players_array):
+        if field.owner == None:
+            if GamePrint.buyoption():
+                # BUY
+                if (Player.buy_newfield(field.cost_of_cell, Player.current_field) == 1):
+                    field.owner = Player
+                    Player.stations += 1
+                GamePrint.actionend()
+            else:
+                # AUKCION
+                if (Player.auction(field.cost_of_cell, Player.current_field, players_array) == 1):
+                    field.owner = Player
+
+                GamePrint.actionend()
+        elif field.owner == Player:
+            # YOUR FIELD
+            GamePrint.station_info(Player)
+            GamePrint.actionend()
+        else:
+            # NALOG(num of stations in ownership)
+            Player.tax(field.cost(Player.stations), field.owner)
+            GamePrint.actionend()
+
 
 class Cell_buyable_spec(Cell_buyable):
     field_type = 3
     arend_spec = [400, 1000]
     def cost(self, number_of_builds): #без dice:     def cost(self, dice, number_of_builds):
         return self.arend_spec[number_of_builds-1]# * dice
+    def action(self, Player, field, players_array):
+        if field.owner == None:
+            if GamePrint.buyoption():
+                # BUY
+                if (Player.buy_newfield(field.cost_of_cell, Player.current_field) == 1):
+                    field.owner = Player
+                    Player.specials += 1
+                GamePrint.actionend()
+            else:
+                # AUKCION
+                if (Player.auction(field.cost_of_cell, Player.current_field, players_array) == 1):
+                    field.owner = Player
+                GamePrint.actionend()
+        elif field.owner == Player:
+            # YOUR FIELD
+            GamePrint.specialfields_info(Player)
+            GamePrint.actionend()
+        else:
+            # NALOG(num of fields in ownership)
+            Player.tax(field.cost(Player.specials), field.owner)
+            GamePrint.actionend()
+
 
 class Cell_Chance (Field):
     field_type = 4
@@ -62,12 +141,60 @@ class Cell_Chance (Field):
                 return -200
             case 10:
                 return -200
+    @staticmethod
+    def action(Player, chance_deposit):
+        Player.money_deposit(chance_deposit)
+        GamePrint.actionend()
 
-class Cell_5 (Field):
-class Cell_6(Field):
-class Cell_7(Field):
-class Cell_8(Field):
-class Cell_9(Field):
+
+class Cell_Prizon_Enter (Field):
+    @staticmethod
+    def action(Player):
+        Player.current_field = 10
+        Player.prisoner = 1
+        GamePrint.prison_notification()
+        GamePrint.actionend()
+
+class Cell_Prizon(Field):
+    @staticmethod
+    def action(Player):
+        if Player.prisoner:
+            Player.prisoner = 0
+            for i in range(3):
+                A = random.randint(1, 6)
+                B = random.randint(1, 6)
+                dice = A + B
+                GamePrint.prison_dice(A, B, dice)
+                if A == B:
+                    GamePrint.prison_success()
+                    return
+        else:
+            GamePrint.actionend()
+
+class Cell_Tax(Field):
+    @staticmethod
+    def action(Player):
+        GamePrint.extratax(2000)
+        Player.money_withdraw(2000)
+        GamePrint.actionend()
+
+class Cell_Super_Tax(Field):
+    @staticmethod
+    def action(Player):
+        GamePrint.extratax(4000)
+        Player.money_withdraw(4000)
+        GamePrint.actionend()
+
+class Cell_Waiter(Field):
+    @staticmethod
+    def action(Player):
+        if Player.waiting == 0:
+            Player.waiting = 1
+            GamePrint.skip()
+        else:
+            Player.waiting = 0
+            GamePrint.actionend()
+
 
 
 

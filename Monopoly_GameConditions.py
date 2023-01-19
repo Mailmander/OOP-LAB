@@ -342,137 +342,37 @@ class GameConditions():
 					self.Turn(self.PlayersArray[counter])
 
 	def Turn(self, Player):
-		GamePrint.StartPrint(self,Player)
+		GamePrint.StartPrint(self, Player)  # previous version|      GamePrint.StartPrint(self, Player)
 
-		field = self.FieldsArray[Player.current_field].field_type
-		match field:
+		type_of_field = self.FieldsArray[Player.current_field].field_type
+		match type_of_field:
 			case 0:
-				self.ThrowDice(Player)
+				self.FieldsArray[Player.current_field].action(Player)
 			case 1:
-				if self.FieldsArray[Player.current_field].owner == None :
-					if GamePrint.buyoption():
-						#BUY
-						if(Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field)==1):
-							self.FieldsArray[Player.current_field].owner=Player
-						GamePrint.actionend()
-						self.ThrowDice(Player)
-					else:
-						#AUKCION
-						if(Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field,self.PlayersArray)==1):
-							self.FieldsArray[Player.current_field].owner = Player
-
-						GamePrint.actionend()
-						self.ThrowDice(Player)
-				elif self.FieldsArray[Player.current_field].owner == Player:
-					#YOUR FIELD
-					if GamePrint.field_update(self,Player):
-						Player.money_withdraw(self.FieldsArray[Player.current_field].houses_cost)
-						self.FieldsArray[Player.current_field].houses += 1
-					GamePrint.actionend()
-					self.ThrowDice(Player)
-				else:
-					# NALOG (num of houses in ownership)
-					Player.tax(self.FieldsArray[Player.current_field].cost(),
-							   self.FieldsArray[Player.current_field].owner)
-					GamePrint.actionend()
-					self.ThrowDice(Player)
+				self.FieldsArray[Player.current_field].action(Player, self.FieldsArray[Player.current_field], self.PlayersArray)
 			case 2:
-				if self.FieldsArray[Player.current_field].owner == None:
-					if GamePrint.buyoption():
-						#BUY
-						if (Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
-							self.FieldsArray[Player.current_field].owner = Player
-							Player.stations += 1
-						GamePrint.actionend()
-						self.ThrowDice(Player)
-					else:
-						#AUKCION
-						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field,self.PlayersArray) == 1):
-							self.FieldsArray[Player.current_field].owner = Player
-
-
-						GamePrint.actionend()
-						self.ThrowDice(Player)
-				elif self.FieldsArray[Player.current_field].owner == Player:
-					#YOUR FIELD
-					GamePrint.station_info(Player)
-					GamePrint.actionend()
-					self.ThrowDice(Player)
-				else:
-					#NALOG(num of stations in ownership)
-					Player.tax(self.FieldsArray[Player.current_field].cost(Player.stations), self.FieldsArray[Player.current_field].owner)
-					GamePrint.actionend()
-					self.ThrowDice(Player)
+				self.FieldsArray[Player.current_field].action(Player, self.FieldsArray[Player.current_field], self.PlayersArray)
 			case 3:
-				if self.FieldsArray[Player.current_field].owner == None:
-					if GamePrint.buyoption():
-						#BUY
-						if (Player.buy_newfield(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field) == 1):
-							self.FieldsArray[Player.current_field].owner = Player
-							Player.specials += 1
-						GamePrint.actionend()
-						self.ThrowDice(Player)
-					else:
-						#AUKCION
-						if (Player.auction(self.FieldsArray[Player.current_field].cost_of_cell,Player.current_field,self.PlayersArray) == 1):
-							self.FieldsArray[Player.current_field].owner = Player
-						GamePrint.actionend()
-						self.ThrowDice(Player)
-				elif self.FieldsArray[Player.current_field].owner == Player:
-					#YOUR FIELD
-					GamePrint.specialfields_info(Player)
-					GamePrint.actionend()
-					self.ThrowDice(Player)
-				else:
-					#NALOG(num of fields in ownership)
-					Player.tax(self.FieldsArray[Player.current_field].cost(Player.specials), self.FieldsArray[Player.current_field].owner)
-					GamePrint.actionend()
-					self.ThrowDice(Player)
+				self.FieldsArray[Player.current_field].action(Player, self.FieldsArray[Player.current_field], self.PlayersArray)
 			case 4:
-				Player.money_deposit(self.FieldsArray[Player.current_field].chance())
-				GamePrint.actionend()
-				self.ThrowDice(Player)
+				self.FieldsArray[Player.current_field].action(Player, self.FieldsArray[Player.current_field].chance())
 			case 5:
-				Player.current_field = 10
-				Player.prisoner = 1
-				GamePrint.prison_notification()
-				GamePrint.actionend()
+				self.FieldsArray[Player.current_field].action(Player)
 			case 6:
-				if Player.prisoner:
-					Player.prisoner = 0
-					for i in range(3):
-						A = random.randint(1, 6)
-						B = random.randint(1, 6)
-						dice = A + B
-						GamePrint.prison_dice(A,B,dice)
-						if A==B:
-							GamePrint.prison_success()
-							self.ThrowDice(Player)
-							return
-				else:
-					GamePrint.actionend()
-					self.ThrowDice(Player)
+				self.FieldsArray[Player.current_field].action(Player)
 			case 7:
-				GamePrint.extratax(2000)
-				Player.money_withdraw(2000)
-				GamePrint.actionend()
-				self.ThrowDice(Player)
+				self.FieldsArray[Player.current_field].action(Player)
 			case 8:
-				GamePrint.extratax(4000)
-				Player.money_withdraw(4000)
-				GamePrint.actionend()
-				self.ThrowDice(Player)
+				self.FieldsArray[Player.current_field].action(Player)
 			case 9:
-				if Player.waiting == 0:
-					Player.waiting = 1
-					GamePrint.skip()
-				else:
-					Player.waiting = 0
-					GamePrint.actionend()
-					self.ThrowDice(Player)
+				self.FieldsArray[Player.current_field].action(Player)
+
+		self.ThrowDice(Player)
 
 
 	def ThrowDice(self, Player):
+		if Player.waiting or Player.prisoner:
+			return
 		A = random.randint(1, 6)
 		B = random.randint(1, 6)
 		dice =  A + B
