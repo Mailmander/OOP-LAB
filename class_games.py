@@ -63,3 +63,14 @@ class Cell_Chance (Field):
             case 10:
                 return -200
 
+class Cell_5 (Field):
+class Cell_6(Field):
+class Cell_7(Field):
+class Cell_8(Field):
+class Cell_9(Field):
+
+
+
+
+
+
