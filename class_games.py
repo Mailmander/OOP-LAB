@@ -140,8 +140,8 @@ class Cell_Chance (Field):
                 return -200
             case 10:
                 return -200
-    @staticmethod
-    def action(Player, chance_deposit):
+
+    def action(self, Player, chance_deposit):
         Player.money_deposit(chance_deposit)
         GamePrint.actionend()
 
