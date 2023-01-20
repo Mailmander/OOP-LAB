@@ -1,5 +1,4 @@
 from Interface import GamePrint
-from Player_class import Player
 class Stats ():
     PlayerStats=[]
     def AddForPlayers(self,id):
