@@ -24,6 +24,8 @@ class GameConditions():
 	PlayersArray = []
 	FieldsArray = []
 	counter = -1
+	winner= "---"
+	winnernum = -1
 
 
 
@@ -347,13 +349,16 @@ class GameConditions():
 				self.death_check+=1
 				if self.death_check == self.NumOfPlayers-1:
 					# ALL DEAAAAAAD, END OF GAME
-					GamePrint.end_message(winner)
+					GamePrint.end_message(self.winner)
+					self.winner="-_-_-_-"
 					Stats.Stat_Time(self.PlayersArray)
 					break
 
 			elif(self.PlayersArray[self.counter].alive == 1):
-				winner = self.PlayersArray[self.counter].name
-				Menu_result = self.Menu(self.PlayersArray[self.counter])
+				self.winner = self.PlayersArray[self.counter].name
+				self.winnernum=self.counter
+				Menu_result = -1 #self.Menu(self.PlayersArray[self.counter])
+				self.Turn(self.PlayersArray[self.counter])
 				if Menu_result == -1:
 					break
 
@@ -397,15 +402,73 @@ class GameConditions():
 
 		photo = PhotoImage(file="./logo4.png")
 		playerphot = PhotoImage(file="./logo5.png")
+		jailph = PhotoImage(file="./jail.png")
+		lavka = PhotoImage(file="./lavka.png")
+		dekanat = PhotoImage(file="./dekan.png")
+		obsh = PhotoImage(file="./obsh.png")
+		mag = PhotoImage(file="./magaz.png")
+		tpkorp = PhotoImage(file="./35.png")
+		cafe = PhotoImage(file="./cafe.png")
+		park = PhotoImage(file="./park.png")
+		ark = PhotoImage(file="./ark.png")
+		bibl = PhotoImage(file="./bibl.png")
+		firstkorp = PhotoImage(file="./firstkorp.png")
+		metro = PhotoImage(file="./metro.png")
+		chance = PhotoImage(file="./chance.png")
+		nalog = PhotoImage(file="./nalog.png")
+		parking = PhotoImage(file="./parking.png")
+		telec = PhotoImage(file="./kpitelec.png")
 		for i in range(40):
 			print(i)
-			clit[i] = Label(field, image=photo, highlightthickness=1, width=50, height=50, bg='white')
+			clit[i] = Label(field, image=photo, highlightthickness=1, width=50, height=50, bg='black')
+			if (i == 0 ):
+				clit[i].config(image=dekanat,bg="white")
+			if(i==1 or i==3 ):
+				clit[i].config(image=lavka,bg="purple")
+			if (i == 6 or i == 8 or i == 9):
+				clit[i].config(image=ark,bg="lightblue")
+			if (i == 11 or i == 13 or i == 14):
+				clit[i].config(image=obsh,bg="lightpink")
+			if (i == 16 or i == 18 or i == 19):
+				clit[i].config(image=tpkorp,bg="orange")
+			if (i == 21 or i == 23 or i == 24):
+				clit[i].config(image=mag,bg="red")
+			if (i == 26 or i == 27 or i == 29):
+				clit[i].config(image=cafe,bg="yellow")
+			if (i == 31 or i == 32 or i == 34):
+				clit[i].config(image=park,bg="darkgreen")
+			if (i == 37 ):
+				clit[i].config(image=firstkorp,bg="darkblue")
+			if (i == 39):
+				clit[i].config(image=bibl,bg="darkblue")
+			if (i == 5 or i == 15 or i == 25 or i == 35):
+				clit[i].config(image=metro,bg="black")
+			if (i == 4 or i == 7 or i == 17 or i == 22 or i == 33 or i == 36):
+				clit[i].config(image=chance, bg="black")
+			if (i == 2 or i == 38):
+				clit[i].config(image=nalog, bg="black")
+			if (i == 10):
+				clit[i].config(image=jailph,bg="green")
+			if (i == 30):
+				clit[i].config(image=jailph,bg="darkred")
+			if (i == 20):
+				clit[i].config(image=parking, bg="black")
+			if (i == 12 or i == 28):
+				clit[i].config(image=telec, bg="black")
+
 		clitpl = [None] * 4
 		colors = ['green', 'yellow', 'blue', 'red']
 		for i in range(4):
 			clitpl[i] = Label(field, text=i + 1, bg=colors[i])
 
-
+		def winner():
+			btncont.destroy()
+			winsign = Label(field,text="YAAAAAAYYYY AND THE WINNER IS:").grid(row=5,column=5)
+			winsign2 = Label(field,text=self.PlayersArray[self.winnernum].name).grid(row=5,column=6)
+		def delete_dead():
+			for i in range(self.NumOfPlayers):
+				if(self.PlayersArray[i].alive!=1):
+					clitpl[i].configure(text='dead',bg='black')
 		def create_fields():
 			field.config(bg="grey")
 			for i in range(40):
@@ -425,7 +488,6 @@ class GameConditions():
 					print(i)
 					clit[i].grid(row=40 - i, column=0)
 
-			btncont = Button(field, text="Next turn", bg='orange', command=returns)
 			btncont.place(relx=0.15, rely=0.65)
 			#self.CreatePlayers()
 			self.CreateFields()
@@ -459,7 +521,7 @@ class GameConditions():
 			#for i in range(self.NumOfPlayers):
 			#	self.PlayersArray.append(Player(i))
 			for i in range(self.NumOfPlayers):
-				clitpl[i].grid(row=0, column=i)
+				clitpl[i].grid(row=0, column=0)
 
 
 
@@ -477,6 +539,10 @@ class GameConditions():
 
 
 		def returns():
+			if(self.winner=="-_-_-_-"):
+				winner()
+
+			delete_dead()
 			self.GameContinue()
 			player_menu()
 			print("Next")
@@ -518,25 +584,7 @@ class GameConditions():
 			playerinfos[7].config(text=fields)
 			for i in range(8):
 				playerinfos[i].grid(row=1+i,column=13)
-			#answer = GamePrint.Menu_Main()
-			# answer = 1
-			# match answer:
-			# 	case 1:
-			# 		self.Turn(Player)
-			# 		while Player.double:
-			# 			self.Turn(Player)
-			#
-			# 	case 2:
-			# 		iterator = Iterator(self.FieldsArray, self.PlayersArray, self.NumOfPlayers)
-			# 		sub_iterator = iterator.decise(Player)
-			# 		sub_iterator.search()
-			#
-			# 	case 3:
-			# 		Stats.Changestat(self, Player)
-			#
-			# 	case 4:
-			# 		GamePrint.Menu_end()
-			# 		return -1
+
 
 
 		title = Label(frame, text='Menu', bg='gray', font=40)
@@ -551,7 +599,7 @@ class GameConditions():
 		btnsettings.place(relx=0.15, rely=0.45)
 		btnleave = Button(frame, text="Leave game", bg='red', command=game_leave)
 		btnleave.place(relx=0.15, rely=0.65)
-
+		btncont = Button(field, text="Next turn", bg='orange', command=returns)
 		sign = Label(windselection, text='Select number of players:', bg='grey', font=40)
 		selectplayer = Radiobutton(windselection, text="1", variable=choice, value=1, command=namechoose)
 		selectplayer2 = Radiobutton(windselection, text="2", variable=choice, value=2, command=namechoose)

@@ -26,7 +26,7 @@ class GamePrint():
 
     @staticmethod
     def buyoption():
-        decision = (input("Купляємо? (1/0):   "))
+        decision = 1 #(input("Купляємо? (1/0):   "))
         return decision
 
     @staticmethod
@@ -36,8 +36,9 @@ class GamePrint():
         print("Ви потрапили на власне поле з ", field.houses, "будівлями."
                                                                                                "\nНова будівля коштуватиме: ",
               field.houses_cost)
-        if int(input("Бажаєте придбати будівлю? (1/0):   ")):
-            return 1
+        #if int(input("Бажаєте придбати будівлю? (1/0):   ")):
+            #return 1
+        return 1
         print("-------------------------------")
     def station_info(Player):
         print("Ви потрапили на власне поле, у вас ", Player.stations, "станцій.")
