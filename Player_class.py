@@ -1,7 +1,7 @@
 from Interface import GamePrint
 class Player():
-    def __init__(self, playernumber):
-        self.name = GamePrint.type_name(self,playernumber)
+    def __init__(self, playernumber, playername):
+        self.name = playername #GamePrint.type_name(self,playernumber)
         self.money = 20000
         self.playernumber = playernumber
         self.owned_fields=[]
