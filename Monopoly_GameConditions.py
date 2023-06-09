@@ -23,6 +23,7 @@ class GameConditions():
 	NumOfFields = 40
 	PlayersArray = []
 	FieldsArray = []
+	counter = -1
 
 
 
@@ -333,16 +334,16 @@ class GameConditions():
 			print(self.FieldsArray[i].field_number, "   ", self.FieldsArray[i].name)
 
 
+
+
 	def GameContinue(self):
-		counter = -1
-		self.death_check = 0
 		while True:
-			counter=counter+1
-			if (counter == self.NumOfPlayers):
-				counter = 0
+			self.counter=self.counter+1
+			if (self.counter == self.NumOfPlayers):
+				self.counter = 0
 				self.death_check = 0
 
-			if (self.PlayersArray[counter].alive == 0):
+			if (self.PlayersArray[self.counter].alive == 0):
 				self.death_check+=1
 				if self.death_check == self.NumOfPlayers-1:
 					# ALL DEAAAAAAD, END OF GAME
@@ -350,9 +351,9 @@ class GameConditions():
 					Stats.Stat_Time(self.PlayersArray)
 					break
 
-			elif(self.PlayersArray[counter].alive == 1):
-				winner = self.PlayersArray[counter].name
-				Menu_result = self.Menu(self.PlayersArray[counter])
+			elif(self.PlayersArray[self.counter].alive == 1):
+				winner = self.PlayersArray[self.counter].name
+				Menu_result = self.Menu(self.PlayersArray[self.counter])
 				if Menu_result == -1:
 					break
 
@@ -365,6 +366,7 @@ class GameConditions():
 
 
 	def Graphics(self):
+		self.death_check = 0
 		root = Tk()
 		choice = IntVar()
 		logo = PhotoImage(file='logo3.png')
@@ -398,7 +400,10 @@ class GameConditions():
 		for i in range(40):
 			print(i)
 			clit[i] = Label(field, image=photo, highlightthickness=1, width=50, height=50, bg='white')
-
+		clitpl = [None] * 4
+		colors = ['green', 'yellow', 'blue', 'red']
+		for i in range(4):
+			clitpl[i] = Label(field, text=i + 1, bg=colors[i])
 
 
 		def create_fields():
@@ -453,10 +458,7 @@ class GameConditions():
 			#self.CreatePlayers()
 			#for i in range(self.NumOfPlayers):
 			#	self.PlayersArray.append(Player(i))
-			clitpl = [None] * 4
-			colors = ['green','yellow','blue','red']
 			for i in range(self.NumOfPlayers):
-				clitpl[i] = Label(field, text=i+1, bg=colors[i])
 				clitpl[i].grid(row=0, column=i)
 
 
@@ -467,42 +469,82 @@ class GameConditions():
 			btnstart.destroy()
 			create_fields()
 			select_menu()
-			print('Game ended')
+
 
 		def game_leave():
 			print("Game stopped!")
 			exit()
 
+
 		def returns():
 			self.GameContinue()
+			player_menu()
 			print("Next")
 
 		def game_settings():
 			print("Game settings!")
 			return 2
+
+		def column_calc(place):
+			if(place <= 10):
+				return place
+			elif(place > 10 and place <= 20):
+				return 10
+			elif (place > 20 and place <= 30):
+				return 10 - place%20
+			elif (place > 30 and place <= 40):
+				return 0
+		def row_calc(place):
+			if (place <= 10):
+				return 0
+			elif (place > 10 and place <= 20):
+				return place - 10
+			elif (place > 20 and place <= 30):
+				return 10
+			elif (place > 30 and place <= 40):
+				return 40 - place
 		def player_menu():
-			answer = GamePrint.Menu_Main()
-			match answer:
-				case 1:
-					self.Turn(Player)
-					while Player.double:
-						self.Turn(Player)
-
-				case 2:
-					iterator = Iterator(self.FieldsArray, self.PlayersArray, self.NumOfPlayers)
-					sub_iterator = iterator.decise(Player)
-					sub_iterator.search()
-
-				case 3:
-					Stats.Changestat(self, Player)
-
-				case 4:
-					GamePrint.Menu_end()
-					return -1
+			clitpl[self.counter].grid(row=row_calc(self.PlayersArray[self.counter].current_field),column=column_calc(self.PlayersArray[self.counter].current_field))
+			playerinfo.grid(row =0 ,column=13)
+			playerinfo.config(text=self.PlayersArray[self.counter].name)
+			playerinfos[0].config(text='Player№:')
+			playerinfos[1].config(text=self.counter+1)
+			playerinfos[2].config(text='Money:')
+			playerinfos[3].config(text=self.PlayersArray[self.counter].money)
+			playerinfos[4].config(text="Current field:")
+			playerinfos[5].config(text=self.PlayersArray[self.counter].current_field)
+			fields = ', '.join(map(str,self.PlayersArray[self.counter].owned_fields))
+			playerinfos[6].config(text="Owned fields:")
+			playerinfos[7].config(text=fields)
+			for i in range(8):
+				playerinfos[i].grid(row=1+i,column=13)
+			#answer = GamePrint.Menu_Main()
+			# answer = 1
+			# match answer:
+			# 	case 1:
+			# 		self.Turn(Player)
+			# 		while Player.double:
+			# 			self.Turn(Player)
+			#
+			# 	case 2:
+			# 		iterator = Iterator(self.FieldsArray, self.PlayersArray, self.NumOfPlayers)
+			# 		sub_iterator = iterator.decise(Player)
+			# 		sub_iterator.search()
+			#
+			# 	case 3:
+			# 		Stats.Changestat(self, Player)
+			#
+			# 	case 4:
+			# 		GamePrint.Menu_end()
+			# 		return -1
 
 
 		title = Label(frame, text='Menu', bg='gray', font=40)
 		title.pack()
+		playerinfo = Label(field, text='Player info', bg='gray', font=40)
+		playerinfos = [None] * 8
+		for i in range(8):
+			playerinfos[i]= Label(field, text='Player info', bg='gray', font=40)
 		btnstart = Button(frame, text="Start game", bg='green', command=game_start)
 		btnstart.place(relx=0.15, rely=0.25)
 		btnsettings = Button(frame, text="Settings", bg='yellow', command=game_settings)
@@ -530,15 +572,18 @@ class GameConditions():
 				self.Turn(Player)
 				while Player.double:
 					self.Turn(Player)
+				return -1
 
 			case 2:
 				iterator = Iterator(self.FieldsArray, self.PlayersArray, self.NumOfPlayers)
 				sub_iterator = iterator.decise(Player)
 				sub_iterator.search()
+				return -1
 
 
 			case 3:
 				Stats.Changestat(self,Player)
+				return -1
 
 			case 4:
 				GamePrint.Menu_end()
