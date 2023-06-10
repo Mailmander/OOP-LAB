@@ -548,7 +548,7 @@ class GameConditions():
 			print("Next")
 
 		def game_settings():
-			print("Game settings!")
+			print("NO SETTINGS!")
 			return 2
 
 		def column_calc(place):
@@ -584,6 +584,10 @@ class GameConditions():
 			playerinfos[7].config(text=fields)
 			for i in range(8):
 				playerinfos[i].grid(row=1+i,column=13)
+			btnstat.grid(row=10,column=13)
+		def statistic():
+			Stats.Changestat(self,self.PlayersArray[self.counter])
+
 
 
 
@@ -609,6 +613,7 @@ class GameConditions():
 		namer = [None] * 4
 		for i in range(4):
 			namer[i]= Entry(windselection)
+		btnstat = Button(field, text="Turn On/Off Statistics", bg='orange', command=statistic)
 
 
 		root.mainloop()
