@@ -539,6 +539,7 @@ class GameConditions():
 
 
 		def returns():
+			btnstatsign.config(text='')
 			if(self.winner=="-_-_-_-"):
 				winner()
 
@@ -560,6 +561,8 @@ class GameConditions():
 				return 10 - place%20
 			elif (place > 30 and place <= 40):
 				return 0
+		#def pattern_print():
+		#	print()
 		def row_calc(place):
 			if (place <= 10):
 				return 0
@@ -579,14 +582,17 @@ class GameConditions():
 			playerinfos[3].config(text=self.PlayersArray[self.counter].money)
 			playerinfos[4].config(text="Current field:")
 			playerinfos[5].config(text=self.PlayersArray[self.counter].current_field)
+			playerinfos[6].config(text=self.FieldsArray[self.PlayersArray[self.counter].current_field].name)
 			fields = ', '.join(map(str,self.PlayersArray[self.counter].owned_fields))
-			playerinfos[6].config(text="Owned fields:")
-			playerinfos[7].config(text=fields)
-			for i in range(8):
+			playerinfos[7].config(text="Owned fields:")
+			playerinfos[8].config(text=fields)
+			for i in range(9):
 				playerinfos[i].grid(row=1+i,column=13)
 			btnstat.grid(row=10,column=13)
 		def statistic():
 			Stats.Changestat(self,self.PlayersArray[self.counter])
+			btnstatsign.config(text='Changed')
+			btnstatsign.grid(row=11,column=13)
 
 
 
@@ -594,8 +600,8 @@ class GameConditions():
 		title = Label(frame, text='Menu', bg='gray', font=40)
 		title.pack()
 		playerinfo = Label(field, text='Player info', bg='gray', font=40)
-		playerinfos = [None] * 8
-		for i in range(8):
+		playerinfos = [None] * 9
+		for i in range(9):
 			playerinfos[i]= Label(field, text='Player info', bg='gray', font=40)
 		btnstart = Button(frame, text="Start game", bg='green', command=game_start)
 		btnstart.place(relx=0.15, rely=0.25)
@@ -614,6 +620,7 @@ class GameConditions():
 		for i in range(4):
 			namer[i]= Entry(windselection)
 		btnstat = Button(field, text="Turn On/Off Statistics", bg='orange', command=statistic)
+		btnstatsign = Label(field, text='Changed', bg='gray', font=40)
 
 
 		root.mainloop()
