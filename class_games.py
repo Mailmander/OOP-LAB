@@ -147,6 +147,7 @@ class Cell_Chance (Field):
 
 
 class Cell_Prizon_Enter (Field):
+    field_type = 5
     @staticmethod
     def action(Player):
         Player.current_field = 10
@@ -155,6 +156,7 @@ class Cell_Prizon_Enter (Field):
         GamePrint.actionend()
 
 class Cell_Prizon(Field):
+    field_type = 6
     @staticmethod
     def action(Player):
         if Player.prisoner:
@@ -171,6 +173,7 @@ class Cell_Prizon(Field):
             GamePrint.actionend()
 
 class Cell_Tax(Field):
+    field_type = 7
     @staticmethod
     def action(Player):
         GamePrint.extratax(2000)
@@ -178,6 +181,7 @@ class Cell_Tax(Field):
         GamePrint.actionend()
 
 class Cell_Super_Tax(Field):
+    field_type = 8
     @staticmethod
     def action(Player):
         GamePrint.extratax(4000)
@@ -185,6 +189,7 @@ class Cell_Super_Tax(Field):
         GamePrint.actionend()
 
 class Cell_Waiter(Field):
+    field_type = 9
     @staticmethod
     def action(Player):
         if Player.waiting == 0:
